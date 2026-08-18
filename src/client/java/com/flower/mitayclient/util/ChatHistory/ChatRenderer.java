@@ -21,6 +21,7 @@ import static com.flower.mitayclient.util.ChatHistory.TextSerializer.removeTrail
 import static com.flower.mitayclient.util.MitayUtils.getFontColor;
 import static com.flower.mitayclient.util.Resource.getStringWidth;
 import static com.flower.mitayclient.util.Skin.SkinCacheHelper.renderHead;
+import static com.flower.mitayclient.util.Skin.SkinCacheHelper.renderHeadWith3D;
 
 enum MessageType
 {
@@ -111,7 +112,8 @@ public class ChatRenderer
         }
         try {
 
-            renderHead(context, nameStr.contains("]") ? nameStr.split("]")[1].trim() : nameStr.trim(), iconX, y, 24);
+            renderHeadWith3D(context, nameStr.contains("]") ? nameStr.split("]")[1].trim() : nameStr.trim(), isSelfMessage(message) ? iconX + 4 : iconX - 4, y + 4, 24, 0.5f);
+            String s = nameStr.split("]")[1].trim();
         } catch (ArrayIndexOutOfBoundsException e)
         {
             System.out.println(nameStr);
@@ -126,6 +128,8 @@ public class ChatRenderer
 
         Component content = nameAndContent[1];
         int textX = isSelfMessage(message) ? iconX-6-Minecraft.getInstance().font.width(content) : iconX + 30;
+
+
         switch (type)
         {
             case CHAT ->
@@ -161,9 +165,6 @@ public class ChatRenderer
                     dimensionName = entry1.getKey();
                     color = entry1.getValue();
                 }
-
-
-
 
 
 
