@@ -1,0 +1,56 @@
+{
+  "key.category.mitayclient.mitay" : "Mitay",
+  "key.mitayclient.open_places_list" : "打开地点列表",
+  "key.mitayclient.open_teleport_player" : "打开玩家列表",
+  "key.mitayclient.surface" : "传送到地表",
+  "key.mitayclient.broadcast_location" : "广播坐标",
+  "key.mitayclient.home" : "传送到重生点",
+  "key.mitayclient.admin" : "管理员面板",
+  "key.mitayclient.settings" : "设置",
+  "key.mitayclient.history" : "聊天记录",
+
+  "world.mitayclient.overworld" : "主世界",
+  "world.mitayclient.nether" : "地狱",
+  "world.mitayclient.end" : "末地",
+  "world.mitayclient.creative" : "创造世界",
+
+  "place.mitayclient.exchange" : "村民交易所",
+  "place.mitayclient.town" : "大本营",
+  "place.mitayclient.mob_tower" : "沼泽刷怪塔",
+  "place.mitayclient.resource" : "资源点",
+  "place.mitayclient.afk" : "挂机点",
+  "place.mitayclient.back" : "返回",
+  "place.mitayclient.iron" : "刷铁机",
+  "place.mitayclient.sugar_cane" : "100x熔炉 & 甘蔗农场",
+  "place.mitayclient.stone" : "树场 & 刷石机",
+  "place.mitayclient.guardian" : "守卫者农场",
+  "place.mitayclient.zoo" : "动物园",
+
+  "place.mitayclient.pigman" : "猪人塔",
+  "place.mitayclient.wither_skull" : "凋零骷髅农场",
+  "place.mitayclient.ghast_farm" : "恶魂塔",
+
+  "place.mitayclient.portal" : "主世界末地传送门",
+  "place.mitayclient.mainland" : "末地主岛",
+  "place.mitayclient.enderman" : "小黑塔",
+
+  "menu.mitayclient.single" : "单人游戏",
+  "menu.mitayclient.connect" : "直连服务器",
+  "menu.mitayclient.pinging" : "获取中...",
+  "menu.mitayclient.online" : "在线人数: ",
+  "menu.mitayclient.closed" : "服务器已关闭",
+  "menu.mitayclient.settings" : "设置",
+  "menu.mitayclient.quit" : "退出游戏",
+  "menu.mitayclient.statistic" : "统计信息",
+  "menu.mitayclient.back" : "返回游戏",
+  "menu.mitayclient.options" : "选项",
+  "menu.mitayclient.open_to_lan" : "开放到局域网",
+  "menu.mitayclient.saving" : "保存世界中...",
+
+  "screen.mitayclient.place" : "地点列表",
+  "screen.mitayclient.player" : "玩家列表",
+  "screen.mitayclient.settings" : "设置",
+  "screen.mitayclient.chat_history" : "聊天记录",
+  "screen.mitayclient.profile" : "档案"
+
+}

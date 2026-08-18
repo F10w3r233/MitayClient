@@ -1,0 +1,195 @@
+2024.9.15
+    1.完成了地点列表功能的实现 包括传送, 二级菜单, 按钮上的图标
+    2.完成了 目标玩家信息框
+
+2024.9.16
+    1.完成了 顶部信息栏 玩家名字颜色变化 延迟显示
+    2.装备耐久显示
+
+2024.9.17
+    预计：实现 服务端检测是否为Mitay客户端 ✔
+            显示玩家列表
+            玩家列表传送
+    1.完成了 检测主副手工具是否有经验修补
+
+2024.9.18 完成了 壁纸更换
+                工具是否正在经验修补中(onMending)
+            预计：壁纸切换screen   (wallpaperScreen) ✔ 要用到json储存用户数据
+
+2024.10.7 完成了 PlayerListHud 但没有动画
+            尝试了TitleScreen的壁纸切换 背景会变成泥土
+          下一步 1.玩家列表 点击传送 快捷键b ✔
+                 2.用客户端的PlayerListEntry实现 Entitlement的检测 延迟检测 经验修补检测  ✔
+
+2024.10.8 写好了tp玩家screen的 按钮 和 screen
+
+2024.10.9 写了按钮的layout
+
+2024.10.11 1.成功解决了玩家进出入服务器 tp screen的按钮增删问题 纵向排列问题
+           2.写出了Wallpaper Screen
+           3.写出了Teleport Player Screen
+
+2024.10.16 1.完成了 用客户端的PlayerListEntry实现 Entitlement的检测 延迟检测 经验修补检测  ✔
+
+2024.10.18 尝试 FontDrawer 分辨率低
+
+2024.12.1 重写StatScreen 实现背景透明 按钮自定义
+
+2024.12.13 完成Player Info Screen 的装备显示部分 排序正常 附魔名称基本居中 但无颜色
+2024.12.15 初步尝试TextFieldWidget 想重写chatHud
+2024.12.16 初步尝试ChatScreen
+
+
+2025.01.30 - ver 2.0 - 成功移植到1.21.4 大部分功能都可用
+2025.01.31 - ver 2.1.1 - 修复图片透明度 闪退问题
+           - ver 2.1.2 - 移植了玩家列表
+2025.02.01 - ver 2.1.3 - 完全修复了按tab闪退的问题
+
+2025.02.03 - ver 2.2 - 新增surface与广播坐标 快捷键
+           - ver 2.2.1 - 新增home快捷键
+
+2025.02.08 - ver 2.3 - 标题界面显示服务器在线情况
+2025.02.09 - ver 2.3.1 - 标题界面显示在线人数
+2025.02.10 - ver 2.4 - 管理员面板 可添加假人
+2025.02.23 - ver 2.4.1 - 用List<Runnable>重写了statusEffect的渲染；实现了：当药效时间 ≤ 10s时，不透明度闪烁
+
+2025.02.24 - ver 2.5 - 重写PlayerInfoScreen ScreenHandler 去除了gui 保留图标
+2025.02.25 - ver 2.5.1 - 实现了 物品栏的坐标偏移
+2025.02.25 - ver 2.5.2 - 将物品栏放到了正确的地方
+2025.02.26 - ver 2.5.3 - 修复了单机物品会丢出的bug 正确处理了边界
+2025.02.26 - ver 2.5.4 - 去除了背包的statusEffectDisplay
+2025.03.14 - ver 2.5.5 - 终于修复了quickMove崩端的问题！
+2025.03.15 - ver 2.5.6 - 重画了hotbar的材质
+2025.03.15 - ver 2.5.7 - 实现了玩家列表显示玩家所在世界
+2025.03.15 - ver 2.5.8 - 新增了AboutScreen
+2025.03.23 - ver 2.5.9 - 物品栏不死图腾检测
+
+2025.07.23 - ver 2.5.10 - 重写了PlaceListScreen 修复了bug
+2025.07.26 - ver 2.5.11 - 修复了PlaceListScreen
+2025.08.18 - ver 2.5.12 - 修复了带下划线名称无法显示世界图标的问题
+
+2025.09.10 - ver 2.5.13 - 修复了F1不隐藏药水效果的bug
+
+2025.09.22 - ver 2.5.14 - 修改了配方书的GUI
+2025.10.15 - ver 2.5.15 - 修改了背包、工作台的GUI
+
+2025.10.16 - ver 2.5.16 - 用ai改进了 PlaceListScreen 的数据结构
+           - ver 2.5.16.1 - 新增了 PlaceListScreen 的背景高斯模糊
+           - ver 2.5.16.2 - 新增了 背包 的背景高斯模糊
+2025.10.19 - ver 2.5.16.3 - 新增了 工作台 的背景高斯模糊
+2025.10.24 - ver 2.5.16.4 - 新增了 标题界面 设置按钮
+2025.10.25 - ver 2.5.16.5 - 适配了插件的改动
+           - ver 2.5.17 - 新增了 SwitchButton
+
+           - ver 2.6 - 新增了 SettingsScreen 可以根据偏好开关hud
+2025.10.26 - ver 2.6.1 - 修复了 SettingsScreen 黑屏bug
+           - ver 2.6.2 - 与 Mitay Security 验证程序联动
+2025.10.29 - ver 2.6.3 - WallpaperScreen 回归
+2025.11.03 - ver 2.6.4 - WallpaperScreen可用
+           - ver 2.6.5 - 修复了 PlayerListHud 的显示问题，改为相对坐标
+           - ver 2.7 - 新增了 夜间模式UI ， SplashScreen的MITAY字样
+
+2025.11.06 - ver 2.8 - 新增了 聊天框的玩家头像 显示
+           - ver 2.8.1 - 新增了 地点图标 显示
+           - ver 2.8.2 - 新增了 维度图标 显示
+           - ver 2.8.3 - 修复了 两个玩家只显示一个头像的bug
+
+2025.11.12 - ver 2.9 - 新增了 显示网易云音乐正在播放的音乐
+
+2025.11.13 - ver 2.10 - 支持英文语言
+                      - StatusEffectBar 现在随StatusEffect名称的长度而改变大小
+2025.11.26 - ver 2.10.1 - 调整了 StatusEffectBar 的长度
+
+2025.12.25 - ver 2.11 - 实现了漏斗内容物的显示及动画
+2026.01.06 - ver 2.11.1 - 修复了顶部InfoBar崩端的bug
+2026.01.07 - ver 2.11.2 - 修改了ChatHeads的逻辑
+           - ver 2.11.3 - 修复了玩家退出后，头像消失的bug
+           - ver 2.11.4 - 将 ToolBar 从 InGameHud 中独立出去；修改了附魔工具的颜色
+
+2026.01.10 - ver 2.12 - 新增了 ToolBar 显示附魔功能
+2026.01.10 - ver 2.12.1 - 工具框大小可随名字与附魔的长度而改变
+2026.01.11 - ver 2.12.2 - 完善了左手部分
+           - ver 2.12.3 - 完善了三叉戟的附魔图标
+           - ver 2.12.4 - 完善了重锤的附魔图标
+2026.01.19 - ver 2.12.5 - 顶部信息栏宽度会随名字和地点长度变化
+                        - 修复了SplashScreen Mitay 字样的位置问题
+2026.01.19 - ver 2.12.6 - ToolBar 可根据有无附魔改变高度
+2026.01.19 - ver 2.12.7 - AccessibilityButton显示按钮名字功能回归
+2026.01.20 - ver 2.12.8 - 地点名称支持了英文
+2026.01.24 - ver 2.12.9 - PlayerListHud 显示机器人标签
+2026.01.27 - ver 2.12.10 - PlaceListScreen 等可以用 按键E 关闭
+2026.02.01 - ver 2.12.11 - 聊天信息有提示音
+
+2026.02.03 - ver 2.13 - 初步完成了 ChatHistoryScreen 的基本渲染逻辑
+           - ver 2.13.1 - 实现了玩家皮肤的缓存
+2026.02.04 - ver 2.13.2 - 初步构建了 ChatRenderer
+2026.02.05 - ver 2.13.3 - 完成了渲染聊天记录的算法，完成了 Surface、TP和聊天的组件编写
+2026.02.07 - ver 2.13.4 - 修复了tp信息不显示头像的bug
+2026.02.10 - ver 2.13.5 - 实现了 F信息 的显示
+
+2026.03.10 - ver 2.13.6 - 实现了 ClickEvent
+           - ver 2.13.7 - 完成了 ClickEvent 的渲染
+2026.03.15 - ver 2.13.8 - 完成了 对1.21.11的初步移植，修复了已知bug，恢复了大部分功能
+2026.03.25 - ver 2.13.9 - PlayerListScreen 主体加入了毛玻璃效果
+           - ver 2.14 - 初步构建了 NavigationScreen 为各类 Screen 添加了导航栏
+2026.03.26 - ver 2.14.1 - 完成了 NavigationScreen 的交互
+2026.03.27 - ver 2.14.2 - 完成了图标的排列算法
+           - ver 2.14.3 - 完成了UI的绘制 ，Indicator的渲染
+2026.03.28 - ver 2.14.34 - 修复了 TeleportPlayerScreen不显示按钮的bug
+
+
+2026.03.29 - ver 3.0 - 移植到了 26.1
+2026.03.30 - ver 3.0.1 - 部分地修复了ChatHud的图标显示
+2026.03.31 - ver 3.0.2 - 修复了ChatHud的图标显示
+           - ver 3.1 - 重构了 SideBarScreen
+
+2026.04.08 - ver 3.1.1 - 重构了 SettingsScreen
+2026.04.27 - ver 3.1.2 完成了 SideBarScreen的滚动显示
+
+2026.04.29 - ver 3.2 - 重构了TeleportScreen
+2026.05.07 - ver 3.2.1 - 完成了 MultiColumnTextFieldWidget 的基本功能
+2026.05.08 - ver 3.2.2 - 完成了 ComboBoxWidget 的基本功能，初步美化
+           - ver 3.2.3 - 实现了 TeleportScreen 以坐标传送的基本功能
+2026.05.08 - ver 3.2.4 - 完成了ComboBox的所有美化
+2026.05.13 - ver 3.2.5 - 完成了MultiColumnTextFieldWidget的所有美化
+           - ver 3.2.6 - 完成了 TeleportScreen
+
+2026.05.21 - ver 3.3 - 现在资源的项目结构更加清晰
+2026.05.23 - ver 3.3.1 - 实现了 TitleScreen 的 显示在线玩家功能
+           - ver 3.3.2 - 新增了 TitleScreen 的 刷新按钮
+
+2026.07.05 - ver 4.0 - 初步构建了 ProfilesScreen
+2026.07.10 - ver 4.0.1 - 新增了 PlaceListButton 的ranking类型
+           - ver 4.0.2 - 实现了 离线玩家皮肤渲染
+           - ver 4.0.3 - 修复了 聊天记录的渲染bug
+           - ver 4.1 - 完成了排行榜的编写
+           - ver 4.1.1 - 初步完成了头衔系统
+2026.07.13 - ver 4.1.2 - 更换了 ChatKeywordDetector 的逻辑，适配新头衔系统
+2026.07.14 - ver 4.1.3 - 修复了 原版物品栏经验条不渲染的bug
+           - ver 4.1.4 - 优化了名字颜色及其获取
+           - ver 4.1.5 - 优化了 ChatHistoryScreen 的名字判断逻辑
+           - ver 4.1.6 - 新增了 Toolbar 设置开关
+           - ver 4.1.7 - 修复了 Toolbar 窗口最大化的位置问题
+           - ver 4.1.8 - 修复了 ChatHistoryScreen 窗口最大化的位置问题
+           - ver 4.1.9 - 修复了 ChatHistoryScreen 中文乱码问题（应该）
+
+2026.07.16 - ver 4.2 - 初步构建了 SharedPlace
+           - ver 4.2.1 - 新增了 StatusEffect 开关
+2026.07.20 - ver 4.2.2 - 完成了 SharedPlace
+2026.07.28 - ver 4.2.3 - 修复了 聊天窗口的头像渲染问题
+           - ver 4.2.4 - 优化了 TitleScreenMixin 的性能问题
+2026.07.30 - ver 4.2.4.1 - 修复了 文本框 无法输入中文的问题
+2026.08.02 - ver 4.2.4.2 - 过滤了所有非格式化的信息
+2026.08.02 - ver 4.2.4.3 - 添加了新地点
+
+2026.08.07 - ver 4.3 - 重构了 PlayerListHud，新增挂机检测，矩形自适应长度
+           - ver 4.4 - 新增了 勋章系统
+           - ver 4.4.1 - 修复空指针崩端
+           - ver 4.4.2 - 添加了 紫水晶勋章
+           - ver 4.4.3 - 添加了 监守者勋章，修复空指针崩端
+           - ver 4.4.4 - 更新了小黑塔地点
+
+2026.08.10 - ver 4.4.5 - 将多处头像替换为 有3d效果的双层皮肤头像
+2026.08.11 - ver 4.5 - 重构了聊天头像定位算法，更加精准
+           - ver 4.5.1 - 优化了 ChatHudMixin的字符串构建性能
+           - ver 4.5.2 - 优化了 设置类的性能，减少IO开支

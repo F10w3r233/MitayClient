@@ -1,0 +1,22 @@
+{
+  "required": true,
+  "package": "com.flower.mitayclient.mixin",
+  "compatibilityLevel": "JAVA_25",
+  "client": [
+  ],
+  "injectors": {
+    "defaultRequire": 1
+  },
+  "mixins": [
+    "ChatHudMixin",
+    "ConnectScreenMixin",
+    "ExperienceBarMixin",
+    "GameMenuScreenMixin",
+    "InGameHudMixin",
+    "MessageHandlerMixin",
+    "PlayerListHudMixin",
+    //    "ScreenMixin",
+    "SplashScreenMixin",
+    "TitleScreenMixin"
+  ]
+}

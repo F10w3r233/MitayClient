@@ -1,0 +1,14 @@
+{
+    "vertex": "examplemod:blur",
+    "fragment": "examplemod:blur",
+    "uniforms": [
+        {
+            "name": "Radius",
+            "values": [8.0]
+        },
+        {
+            "name": "Dir",
+            "values": [1.0, 0.0]
+        }
+    ]
+}

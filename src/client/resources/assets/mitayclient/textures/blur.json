@@ -1,0 +1,25 @@
+{
+    "stages": [
+        {
+            "type": "veil:blit",
+            "shader": "examplemod:blur_horizontal",
+            "in": "minecraft:main",
+            "out": "temp_buffer",
+            "clear": true
+        },
+        {
+            "type": "veil:blit",
+            "shader": "examplemod:blur_vertical",
+            "in": "temp_buffer",
+            "out": "minecraft:main",
+            "clear": true
+        }
+    ],
+    "framebuffers": {
+        "temp_buffer": {
+            "width": "main",
+            "height": "main"
+        }
+    },
+    "priority": 100
+}

@@ -1,0 +1,16 @@
+accessWidener   v2  named
+accessible method net/minecraft/client/network/MultiplayerServerListPinger ping (Ljava/net/InetSocketAddress;Lnet/minecraft/client/network/ServerAddress;Lnet/minecraft/client/network/ServerInfo;)V
+transitive-accessible field net/minecraft/client/gui/screen/Screen drawables Ljava/util/List;
+transitive-mutable field net/minecraft/client/gui/screen/Screen drawables Ljava/util/List;
+accessible class net/minecraft/screen/slot/ArmorSlot
+accessible method net/minecraft/screen/CraftingScreenHandler updateResult (Lnet/minecraft/screen/ScreenHandler;Lnet/minecraft/server/world/ServerWorld;Lnet/minecraft/entity/player/PlayerEntity;Lnet/minecraft/inventory/RecipeInputInventory;Lnet/minecraft/inventory/CraftingResultInventory;Lnet/minecraft/recipe/RecipeEntry;)V
+accessible method net/minecraft/screen/slot/Slot onTake (I)V
+accessible class net/minecraft/client/gui/screen/recipebook/AnimatedResultButton$Result
+accessible class net/minecraft/client/gui/hud/ChatHud$RemovalQueuedMessage
+accessible method net/minecraft/client/gui/PlayerSkinDrawer drawHat (Lnet/minecraft/client/gui/DrawContext;Lnet/minecraft/util/Identifier;IIIZI)V
+accessible method net/minecraft/client/texture/NativeImage setColor (III)V
+accessible method net/minecraft/client/texture/NativeImage getColor (II)I
+accessible class net/minecraft/client/gui/components/ChatComponent$AlphaCalculator
+accessible class net/minecraft/client/gui/components/ChatComponent$LineConsumer
+accessible method net/minecraft/client/gui/components/ChatComponent$AlphaCalculator calculate (Lnet/minecraft/client/multiplayer/chat/GuiMessage$Line;)F
+accessible method net/minecraft/client/gui/components/ChatComponent$LineConsumer accept (Lnet/minecraft/client/multiplayer/chat/GuiMessage$Line;IF)V
