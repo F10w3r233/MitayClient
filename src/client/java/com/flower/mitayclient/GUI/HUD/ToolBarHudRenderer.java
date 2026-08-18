@@ -305,7 +305,7 @@ public class ToolBarHudRenderer
                             default -> level = "";
                         }
                         context.blit(RenderPipelines.GUI_TEXTURED, icon, k1 + 8 + index *10-finalLength, client.getWindow().getGuiScaledHeight()-36, 0,0,13,13,13,13);
-                        drawScaledText(context,Minecraft.getInstance().font, Component.nullToEmpty(level), k1 + 8 + index * 10+9-finalLength, client.getWindow().getGuiScaledHeight()-28,0.9f,Mitayclient.getConfig().isDarkShown() ? Resource.WHITE : 0,false);
+                        drawScaledText(context,Minecraft.getInstance().font, Component.nullToEmpty(level), k1 + 8 + index * 10+9-finalLength, client.getWindow().getGuiScaledHeight()-28,0.9f, Resource.WHITE,true);
                         index += 2;
                     }
                 }else k1 = client.getWindow().getGuiScaledWidth();

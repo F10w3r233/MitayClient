@@ -2,7 +2,9 @@ package com.flower.mitayclient.GUI.HUD;
 
 import com.flower.Mitayclient;
 import com.flower.mitayclient.util.Resource;
+import com.google.common.collect.Lists;
 import com.google.common.collect.Ordering;
+import java.util.*;
 import net.minecraft.client.Minecraft;
 import net.minecraft.client.gui.GuiGraphicsExtractor;
 import net.minecraft.client.renderer.RenderPipelines;
@@ -17,261 +19,244 @@ import net.minecraft.util.Mth;
 import net.minecraft.world.effect.MobEffect;
 import net.minecraft.world.effect.MobEffectInstance;
 
-import java.util.*;
-import java.util.stream.Collectors;
+import static com.flower.mitayclient.util.Resource.getStringWidth;
 
-public class StatusEffectHudRenderer {
+public class StatusEffectHudRenderer
+{
+    // 动画偏移变量（与原来一致）
+    static int x1 = 0;
+    static int x2 = 0;
+    static int x3 = 0;
+    static int x4 = 0;
+    static int x5 = 0;
 
-    // 目标常量（不再动画，动画值由每个条目管理）
-    private static final int BAR_X = 16;
-    private static final int BADGE_X = 21;
-    private static final int ICON_X = 24;
-    private static final int TEXT_X = 50;
-    private static final int GAP = 40;
+    // 缓存字段
+    private static Set<String> cachedEffectSignature = null;
+    private static List<Runnable> cachedRunnables = null;
 
-    // 渲染状态列表
-    private static final List<EffectEntry> entries = new ArrayList<>();
-
-    // 缓存排序后的活跃效果
-    private static List<MobEffectInstance> sortedActiveEffects = new ArrayList<>();
-    private static Set<Holder<MobEffect>> lastActiveHolders = null;
-
-    public static void render(GuiGraphicsExtractor context) {
-        if (!Mitayclient.getConfig().isEffectShown()) {
-            return;
-        }
+    public static void render(GuiGraphicsExtractor context)
+    {
+        if (!Mitayclient.getConfig().isEffectShown()) return;
 
         Minecraft client = Minecraft.getInstance();
-        if (client.player == null) return;
+        Collection<MobEffectInstance> collection = client.player.getActiveEffects();
 
-        Collection<MobEffectInstance> activeEffects = client.player.getActiveEffects();
-        if (activeEffects.isEmpty()
-                || (client.screen != null && !client.screen.showsActiveEffects())
-                || client.options.hideGui) {
-            // 无效果时清空状态
-            entries.clear();
-            lastActiveHolders = null;
-            return;
-        }
+        if (!collection.isEmpty() && (client.screen == null || !Minecraft.getInstance().screen.showsActiveEffects()) && !Minecraft.getInstance().options.hideGui)
+        {
+            // 生成当前效果签名
+            Set<String> currentSignature = getEffectSignature(collection);
+            boolean hasChanged = !currentSignature.equals(cachedEffectSignature);
 
-        // 检测效果变化，更新排序列表
-        Set<Holder<MobEffect>> currentHolders = activeEffects.stream()
-                .map(MobEffectInstance::getEffect)
-                .collect(Collectors.toSet());
-        if (lastActiveHolders == null || !currentHolders.equals(lastActiveHolders)) {
-            lastActiveHolders = currentHolders;
-            sortedActiveEffects = Ordering.natural().reverse().sortedCopy(activeEffects);
-            syncEntriesWithActiveEffects();
-        }
-
-        // 每帧更新所有条目动画
-        for (Iterator<EffectEntry> it = entries.iterator(); it.hasNext(); ) {
-            EffectEntry entry = it.next();
-            entry.tick();
-            if (entry.isDead()) {
-                it.remove();
-            }
-        }
-
-        // 绘制
-        for (int i = 0; i < entries.size(); i++) {
-            EffectEntry entry = entries.get(i);
-            // 当前条目在排序中的索引（对于存活、非移除状态的条目重新计算，移除中的使用原位置）
-            int renderIndex = entry.isRemoving ? entry.removingIndex : i;
-            int yTarget = GAP * (renderIndex + 1); // i 从 0 开始，但原代码 i 从 1 开始
-            entry.updateYTarget(yTarget);
-
-            renderEffect(client, context, entry);
-        }
-    }
-
-    // 同步活跃效果与条目列表：标记移除、添加新效果
-    private static void syncEntriesWithActiveEffects() {
-        Set<Holder<MobEffect>> activeHolders = sortedActiveEffects.stream()
-                .map(MobEffectInstance::getEffect)
-                .collect(Collectors.toSet());
-
-        // 标记不再活跃的条目为移除
-        for (EffectEntry entry : entries) {
-            if (!activeHolders.contains(entry.holder) && !entry.isRemoving) {
-                entry.markForRemoval();
-            }
-        }
-
-        // 添加新效果（在活跃中但不在条目列表中，且不是正在移除的）
-        Set<Holder<MobEffect>> existingHolders = entries.stream()
-                .filter(e -> !e.isRemoving)
-                .map(e -> e.holder)
-                .collect(Collectors.toSet());
-
-        for (MobEffectInstance instance : sortedActiveEffects) {
-            Holder<MobEffect> holder = instance.getEffect();
-            if (!existingHolders.contains(holder)) {
-                // 新效果，初始从右侧滑入
-                entries.add(new EffectEntry(instance));
-            }
-        }
-    }
-
-    // 绘制单个效果条目
-    private static void renderEffect(Minecraft client, GuiGraphicsExtractor context, EffectEntry entry) {
-        MobEffectInstance instance = entry.instance;
-        Holder<MobEffect> holder = instance.getEffect();
-        MobEffect effect = holder.value();
-        int offsetX = Math.round(entry.currentX);
-
-        // 闪烁透明度
-        float f = 1.0F;
-        if (instance.endsWithin(200)) {
-            int m = instance.getDuration();
-            int n = 10 - m / 20;
-            f = Mth.clamp((float) m / 10.0F / 5.0F * 0.5F, 0.0F, 0.5F)
-                    + Mth.cos((float) m * 3.1415927F / 5.0F)
-                    * Mth.clamp((float) n / 10.0F * 0.25F, 0.0F, 0.25F);
-            f = Mth.clamp(f, 0.0F, 1.0F);
-        }
-        int alpha = ARGB.white(f);
-
-        // 时间格式化
-        int totalDuration = Math.max(0, instance.getDuration() / 20);
-        int min = totalDuration / 60;
-        int second = totalDuration % 60;
-        String time = String.format("%02d:%02d", min, second);
-
-        // 等级文本
-        String effectLevel = switch (instance.getAmplifier()) {
-            case 1 -> " II";
-            case 2 -> " III";
-            case 3 -> " IV";
-            case 4 -> " V";
-            case 5 -> " VI";
-            default -> "";
-        };
-
-        // 复用组件
-        Component effectName = entry.cachedName;
-        if (effectName == null) {
-            effectName = Component.literal(effect.getDisplayName().getString() + effectLevel)
-                    .setStyle(Style.EMPTY.withBold(true));
-            entry.cachedName = effectName;
-        }
-
-        // 条长度
-        int nameWidth = client.font.width(effectName);
-        int timeWidth = client.font.width(time);
-        int length = Math.max(nameWidth, timeWidth) + 10;
-
-        int y = Math.round(entry.currentY);
-
-        // 背景栏
-        Identifier bar;
-        if (Mitayclient.getConfig().isDarkShown()) {
-            bar = instance.isAmbient() ? Resource.EFFECT_BAR_AMBIENT_DARK : Resource.EFFECT_BAR_DARK;
-        } else {
-            bar = instance.isAmbient() ? Resource.EFFECT_BAR_AMBIENT : Resource.EFFECT_BAR;
-        }
-        context.blit(RenderPipelines.GUI_TEXTURED, bar,
-                BAR_X + offsetX, y - 8, 0, 0,
-                35 + length, 34, 35 + length, 34, alpha);
-
-        // 负面标记
-        if (!effect.isBeneficial()) {
-            context.blit(RenderPipelines.GUI_TEXTURED, Resource.EFFECT_BAR_BAD,
-                    BADGE_X + offsetX, y - 3, 0, 0,
-                    24, 24, 24, 24, alpha);
-        }
-
-        // 图标
-        Identifier sprite = getEffectTexture(holder);
-        context.blitSprite(RenderPipelines.GUI_TEXTURED, sprite,
-                ICON_X + offsetX, y, 18, 18, alpha);
-
-        // 效果名称
-        context.text(client.font, effectName,
-                TEXT_X + offsetX, y - 1,
-                ARGB.color(alpha, effect.getColor()));
-
-        // 倒计时
-        int timeColor = (min == 0 && second <= 10) ? 12400439 : 111111;
-        context.text(client.font, time,
-                TEXT_X + offsetX, y + 11,
-                ARGB.color(alpha, timeColor));
-    }
-
-    private static Identifier getEffectTexture(Holder<MobEffect> effect) {
-        return effect.unwrapKey()
-                .map(ResourceKey::identifier)
-                .map(id -> id.withPrefix("mob_effect/"))
-                .orElseGet(MissingTextureAtlasSprite::getLocation);
-    }
-
-    // 内部条目类
-    private static class EffectEntry {
-        final MobEffectInstance instance;
-        final Holder<MobEffect> holder;
-        Component cachedName;
-
-        float currentX, targetX;
-        float currentY, targetY;
-
-        boolean isRemoving;
-        int removingIndex; // 移除时冻结的索引，用于保持位置
-        int removeTimer;   // 移除动画计时器（帧）
-
-        EffectEntry(MobEffectInstance instance) {
-            this.instance = instance;
-            this.holder = instance.getEffect();
-            // 新效果从右侧进入
-            this.currentX = 200;
-            this.targetX = 0;
-            this.currentY = 0;
-            this.targetY = 0;
-            this.isRemoving = false;
-        }
-
-        void markForRemoval() {
-            this.isRemoving = true;
-            this.targetX = -200; // 向左滑出
-            this.removeTimer = 20; // 20 ticks 内完成滑出
-            // 冻结当前的 Y 位置，防止跟随排序移动
-            this.targetY = this.currentY;
-            this.removingIndex = -1; // 将由外部设置
-        }
-
-        void updateYTarget(int newTargetY) {
-            if (!isRemoving) {
-                this.targetY = newTargetY;
-            }
-        }
-
-        void tick() {
-            // 水平动画
-            float xDiff = targetX - currentX;
-            if (Math.abs(xDiff) < 0.5f) {
-                currentX = targetX;
-            } else {
-                currentX += xDiff * 0.3f; // 缓动系数
+            if (hasChanged)
+            {
+                cachedEffectSignature = currentSignature;
+                cachedRunnables = buildRunnables(collection, context);
+                // 重置动画偏移（效果变化时重新播放入场动画）
+                x1 = -83;
+                x2 = -79;
+                x3 = -76;
+                x4 = -50;
+                x5 = -90;
             }
 
-            // 垂直动画
-            float yDiff = targetY - currentY;
-            if (Math.abs(yDiff) < 0.5f) {
-                currentY = targetY;
-            } else {
-                currentY += yDiff * 0.3f;
-            }
+            // 每帧更新动画（即使列表未变化，也要推进动画）
+            // 注意：动画变量需要在执行每个任务前更新，但这里我们在循环里统一处理
+            // 因此下面执行任务时，每个任务中直接使用当前的 x1~x5
+            // 但动画在每帧都应该推进，所以我们在执行前更新一次
+            updateAnimation();
 
-            // 移除计时
-            if (isRemoving) {
-                removeTimer--;
-                if (removeTimer <= 0 && currentX <= -199) {
-                    // 已充分滑出，标记为死亡
+            // 执行缓存的渲染任务
+            if (cachedRunnables != null)
+            {
+                for (Runnable task : cachedRunnables)
+                {
+                    task.run();
                 }
             }
         }
-
-        boolean isDead() {
-            return isRemoving && removeTimer <= 0 && Math.abs(currentX - targetX) < 1;
+        else
+        {
+            // 无效果时清空缓存
+            cachedEffectSignature = null;
+            cachedRunnables = null;
+            // 动画偏移重置到初始（但可以保留，进入效果时重新开始）
         }
+    }
+
+    /**
+     * 生成药水效果的签名（效果ID + 等级），忽略持续时间
+     */
+    private static Set<String> getEffectSignature(Collection<MobEffectInstance> effects)
+    {
+        Set<String> signature = new HashSet<>();
+        for (MobEffectInstance effect : effects)
+        {
+            String name = effect.getEffect().getRegisteredName();
+            String level = String.valueOf(effect.getAmplifier() + 1);
+            signature.add(name + ":" + level);
+        }
+        return signature;
+    }
+
+    /**
+     * 构建渲染任务列表（已排序）
+     */
+    private static List<Runnable> buildRunnables(Collection<MobEffectInstance> collection, GuiGraphicsExtractor context)
+    {
+        List<Runnable> runnables = new ArrayList<>();
+        int gap = 40;
+        int i = 0;
+
+        // 排序（仅当效果变化时执行）
+        List<MobEffectInstance> sortedEffects = Ordering.natural().reverse().sortedCopy(collection);
+
+        for (MobEffectInstance statusEffectInstance : sortedEffects)
+        {
+            i++;
+            Holder<MobEffect> registryEntry = statusEffectInstance.getEffect();
+            MobEffect statusEffect1 = registryEntry.value();
+
+            // 透明度计算（持续时间小于10秒时闪烁）
+            float f = 1.0F;
+            if (statusEffectInstance.endsWithin(200))
+            {
+                int m = statusEffectInstance.getDuration();
+                int n = 10 - m / 20;
+                f = Mth.clamp((float)m / 10.0F / 5.0F * 0.5F, 0.0F, 0.5F) + Mth.cos((float)m * (float)Math.PI / 5.0F) * Mth.clamp((float)n / 10.0F * 0.25F, 0.0F, 0.25F);
+                f = Mth.clamp(f, 0.0F, 1.0F);
+            }
+            float finalF = f;
+            int alpha = ARGB.white(finalF);
+
+            // 时间字符串
+            int totalDuration = statusEffectInstance.getDuration() / 20;
+            int min;
+            String minStr;
+            if (totalDuration <= 0)
+            {
+                min = 0;
+                minStr = "0" + min;
+            }
+            else
+            {
+                min = totalDuration / 60;
+                if (min < 10)
+                    minStr = "0" + min;
+                else
+                    minStr = String.valueOf(min);
+            }
+            int second;
+            String secondStr;
+            if (totalDuration < 60)
+            {
+                second = totalDuration;
+                if (second < 10)
+                    secondStr = "0" + second;
+                else
+                    secondStr = String.valueOf(second);
+            }
+            else
+            {
+                second = totalDuration % 60;
+                if (second < 10)
+                    secondStr = "0" + second;
+                else
+                    secondStr = String.valueOf(second);
+            }
+
+            // 效果等级
+            String effectLevel;
+            switch (statusEffectInstance.getAmplifier())
+            {
+                case 1: effectLevel = " II"; break;
+                case 2: effectLevel = " III"; break;
+                case 3: effectLevel = " IV"; break;
+                case 4: effectLevel = " V"; break;
+                case 5: effectLevel = " VI"; break;
+                default: effectLevel = "";
+            }
+            String time = minStr + ":" + secondStr;
+            Component effectName = Component.literal(statusEffect1.getDisplayName().getString() + effectLevel).setStyle(Style.EMPTY.withBold(true));
+
+            int length;
+            if (getStringWidth(time) > (getStringWidth(effectName)) + getStringWidth(effectLevel))
+                length = getStringWidth(time);
+            else
+                length = getStringWidth(effectName);
+            length += 10;
+
+            int finalLength = length;
+            int finalI = i;
+
+            // 构建渲染任务
+            runnables.add(() ->
+            {
+                Identifier bar;
+                if (Mitayclient.getConfig().isDarkShown())
+                {
+                    if (statusEffectInstance.isAmbient())
+                        bar = Resource.EFFECT_BAR_AMBIENT_DARK;
+                    else
+                        bar = Resource.EFFECT_BAR_DARK;
+                }
+                else
+                {
+                    if (statusEffectInstance.isAmbient())
+                        bar = Resource.EFFECT_BAR_AMBIENT;
+                    else
+                        bar = Resource.EFFECT_BAR;
+                }
+                int n = gap * finalI;
+
+                // 背景条
+                context.blit(RenderPipelines.GUI_TEXTURED, bar, x1, n - 8, 0, 0, 35 + finalLength, 34, 35 + finalLength, 34, alpha);
+
+                // 负面效果背景标记
+                if (!(statusEffect1.isBeneficial()))
+                {
+                    context.blit(RenderPipelines.GUI_TEXTURED, Resource.EFFECT_BAR_BAD, x2, n - 3, 0, 0, 24, 24, 24, 24, alpha);
+                }
+
+                // 效果图标
+                Identifier sprite = getEffectTexture(registryEntry);
+                context.blitSprite(RenderPipelines.GUI_TEXTURED, sprite, x3, n, 18, 18, alpha);
+
+                // 效果名称
+                context.text(Minecraft.getInstance().font, Component.literal(statusEffect1.getDisplayName().getString() + effectLevel).setStyle(Style.EMPTY.withBold(true)), x4, n - 1, ARGB.color(alpha, statusEffect1.getColor()));
+
+                // 时间（剩余10秒内红色闪烁）
+                int timeColor;
+                if (min == 0 && second <= 10)
+                {
+                    timeColor = 12400439; // 红色
+                }
+                else
+                {
+                    timeColor = 111111;
+                }
+                context.text(Minecraft.getInstance().font, minStr + ":" + secondStr, x4, n + 11, ARGB.color(alpha, timeColor));
+            });
+        }
+
+        return runnables;
+    }
+
+    /**
+     * 每帧更新动画偏移量（与原来逻辑一致）
+     */
+    private static void updateAnimation()
+    {
+        if (x1 < 16) x1++;
+        if (x2 < 21) x2++;
+        if (x3 < 24) x3++;
+        if (x4 < 50) x4++;
+        if (x5 < 95) x5++;
+    }
+
+    public static Identifier getEffectTexture(Holder<MobEffect> effect)
+    {
+        return (Identifier) effect.unwrapKey().map(ResourceKey::identifier).map((id) -> {
+            return id.withPrefix("mob_effect/");
+        }).orElseGet(MissingTextureAtlasSprite::getLocation);
     }
 }
