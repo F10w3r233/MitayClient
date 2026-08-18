@@ -5,8 +5,15 @@ import com.flower.mitayclient.GUI.HUD.Tab.network.TabInfoCache;
 import com.flower.mitayclient.GUI.HUD.Tab.network.TabInfoPayload;
 import com.flower.mitayclient.util.ModIdentifier;
 import com.flower.mitayclient.util.Skin.SkinCacheHelper;
+import net.minecraft.client.renderer.texture.TextureAtlasSprite;
+import net.minecraft.client.resources.model.sprite.SpriteId;
+import net.minecraft.data.AtlasIds;
 import net.minecraft.network.chat.Component;
+import net.minecraft.util.CommonColors;
 import net.minecraft.world.entity.player.PlayerSkin;
+import net.minecraft.world.item.Item;
+import net.minecraft.world.item.ItemStack;
+import net.minecraft.world.item.Items;
 import org.jspecify.annotations.Nullable;
 import org.spongepowered.asm.mixin.Mixin;
 import org.spongepowered.asm.mixin.injection.At;
@@ -43,8 +50,8 @@ public class PlayerListHudMixin
 
     private static final Identifier AFK = ModIdentifier.get("textures/gui/hud/player_list/afk.png");
 
-
-
+    Minecraft client = Minecraft.getInstance();
+    
     @Inject(at = @At("HEAD"), method = "extractRenderState", cancellable = true)
     private void render(final GuiGraphicsExtractor context, final int screenWidth, final Scoreboard scoreboard, final @Nullable Objective displayObjective, CallbackInfo ci)
     {
@@ -117,8 +124,20 @@ public class PlayerListHudMixin
                 boolean isAfk = info.afk();
                 int afkMinute;
 
-                PlayerInfo player = Minecraft.getInstance().getConnection().getPlayerInfo(name);
-                Identifier skin = player.getSkin().body().texturePath();
+
+                PlayerInfo player = null;
+                if (client != null)
+                {
+                    if(client.getConnection() != null)
+                    {
+                        player = Minecraft.getInstance().getConnection().getPlayerInfo(name);
+                    }
+                }
+                Identifier skin = null;
+                if (player != null)
+                {
+                     skin = player.getSkin().body().texturePath();
+                }
                 Component displayName = null;
                 if (player != null)
                 {
@@ -143,8 +162,12 @@ public class PlayerListHudMixin
                     context.blit(RenderPipelines.GUI_TEXTURED, AFK, screenWidth - rectWidth + 8, curY - 13, 0, 0, 16, 16, 16, 16);
                     context.text(Minecraft.getInstance().font, String.valueOf(afkMinute), screenWidth - rectWidth - 2, curY-8, 0xFFDCDCDC);
                 }
+
+//                SpriteId grassTop = new SpriteId(AtlasIds.BLOCKS, Identifier.withDefaultNamespace("block/grass_block_top"));
+//                TextureAtlasSprite sprite = context.getSprite(grassTop);
                 if(worldIcon != null)
-                    context.blit(RenderPipelines.GUI_TEXTURED, worldIcon, screenWidth-rectWidth+18 - 4 + TEST_X , curY - 4, 0 ,0, 14 , 14, 14, 14);
+                    context.blit(RenderPipelines.GUI_TEXTURED, worldIcon, screenWidth-rectWidth+18 - 4 + TEST_X , curY - 5, 0 ,0, 16 , 16, 16, 16);
+//                    context.item(worldIcon_item.getDefaultInstance(), screenWidth-rectWidth+18 - 4 + TEST_X , curY - 4);
             }
         }
     }
