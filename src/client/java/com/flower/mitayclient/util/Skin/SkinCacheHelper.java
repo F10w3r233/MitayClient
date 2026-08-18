@@ -126,24 +126,6 @@ public final class SkinCacheHelper
         return current.isPresent();
     }
 
-    public static void renderHeadWithHat(GuiGraphicsExtractor graphics, UUID uuid, int x, int y, int size) {
-        Identifier skin = getSkinTexture(uuid);
-
-        // 绘制脸部
-        graphics.blit(RenderPipelines.GUI_TEXTURED, skin, x, y, 8, 8, size, size, 8, 8, 64, 64, -1);
-        // 绘制帽子层 (固定从 40,8 取)
-        graphics.blit(RenderPipelines.GUI_TEXTURED, skin, x, y, 40, 8, size, size, 8, 8, 64, 64, -1);
-    }
-
-    public static void renderHeadWithHat(GuiGraphicsExtractor graphics, String name, int x, int y, int size) {
-        Identifier skin = getSkinTexture(name);
-
-        // 绘制脸部
-        graphics.blit(RenderPipelines.GUI_TEXTURED, skin, x, y, 8, 8, size, size, 8, 8, 64, 64, -1);
-        // 绘制帽子层 (固定从 40,8 取)
-        graphics.blit(RenderPipelines.GUI_TEXTURED, skin, x, y, 40, 8, size, size, 8, 8, 64, 64, -1);
-    }
-
     public static void renderHeadWith3D(GuiGraphicsExtractor graphics, String name, int x, int y, int size, float threeDeeNess)
     {
         Identifier skin = getSkinTexture(name);
