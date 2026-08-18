@@ -129,6 +129,11 @@ public final class SkinCacheHelper
     public static void renderHeadWith3D(GuiGraphicsExtractor graphics, String name, int x, int y, int size, float threeDeeNess)
     {
         Identifier skin = getSkinTexture(name);
+        renderHeadWith3D(graphics, skin, x, y, size, threeDeeNess);
+    }
+    public static void renderHeadWith3D(GuiGraphicsExtractor graphics, Identifier skin, int x, int y, int size, float threeDeeNess)
+    {
+
         // 绘制脸部（不变形）
         graphics.blit(RenderPipelines.GUI_TEXTURED, skin, x, y, 8, 8, size, size, 8, 8, 64, 64, -1);
 
