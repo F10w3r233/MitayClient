@@ -6,6 +6,7 @@ import com.flower.mitayclient.GUI.HUD.Tab.network.TabInfoPayload;
 import com.flower.mitayclient.util.ModIdentifier;
 import com.flower.mitayclient.util.Skin.SkinCacheHelper;
 import net.minecraft.network.chat.Component;
+import net.minecraft.world.entity.player.PlayerSkin;
 import org.jspecify.annotations.Nullable;
 import org.spongepowered.asm.mixin.Mixin;
 import org.spongepowered.asm.mixin.injection.At;
@@ -83,7 +84,7 @@ public class PlayerListHudMixin
         if (Minecraft.getInstance().options.keyPlayerList.isDown())
         {
             int biaX = getBiaX();
-            rectWidth = 155 + biaX;
+            rectWidth = 155 + biaX + 5;
 
             //玩家列表 白框
             int playerNumber = players.size();
@@ -117,6 +118,7 @@ public class PlayerListHudMixin
                 int afkMinute;
 
                 PlayerInfo player = Minecraft.getInstance().getConnection().getPlayerInfo(name);
+                Identifier skin = player.getSkin().body().texturePath();
                 Component displayName = null;
                 if (player != null)
                 {
@@ -128,13 +130,12 @@ public class PlayerListHudMixin
                         "";
                 Component name_text = Component.literal(botTag + name);
 
-
+                int TEST_X = 5;
 //                int AFK_HEIGHT = isAfk ? 4 : 0; //挂机玩家名字显示高度
-                context.text(Minecraft.getInstance().font, displayName == null ? name_text : displayName, screenWidth - rectWidth + 32, curY - 1, 0xFFDCDCDC);
+                context.text(Minecraft.getInstance().font, displayName == null ? name_text : displayName, screenWidth - rectWidth + 32 + TEST_X, curY - 1, 0xFFDCDCDC);
                 if (player != null)
                     if (player.getSkin() != null)
-//                        PlayerFaceExtractor.extractRenderState(context, player.getSkin(), screenWidth - rectWidth - 2, curY - 5, 16);
-                        SkinCacheHelper.renderHeadWith3D(context, player.getProfile().name(), screenWidth - rectWidth - 2, curY - 5, 16, 0.5f);
+                        SkinCacheHelper.renderHeadWith3D(context, skin, screenWidth - rectWidth - 1, curY - 5, 16, 0.5f);
 
                 if (isAfk)
                 {
@@ -143,7 +144,7 @@ public class PlayerListHudMixin
                     context.text(Minecraft.getInstance().font, String.valueOf(afkMinute), screenWidth - rectWidth - 2, curY-8, 0xFFDCDCDC);
                 }
                 if(worldIcon != null)
-                    context.blit(RenderPipelines.GUI_TEXTURED, worldIcon, screenWidth-rectWidth+18 , curY - 1, 0 ,0, 10 , 10, 10, 10);
+                    context.blit(RenderPipelines.GUI_TEXTURED, worldIcon, screenWidth-rectWidth+18 - 4 + TEST_X , curY - 4, 0 ,0, 14 , 14, 14, 14);
             }
         }
     }
