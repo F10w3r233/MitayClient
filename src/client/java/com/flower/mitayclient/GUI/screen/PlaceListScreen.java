@@ -69,8 +69,8 @@ public class PlaceListScreen extends SideBarScreen
 
     //SubMenuButtons
     List<PlaceListButton> mob_tower_subButtons = Arrays.asList(
-            createContentButton(Resource.RESOURCE_text, "mob_resource", "tpplace mob_resource"),
-            createContentButton(Resource.AFK_text, "mob_afk", "tpplace mob_afk"),
+            createContentButton(Resource.RESOURCE_text, "mob_resource", "overworld_resource","tpplace mob_resource"),
+            createContentButton(Resource.AFK_text, "mob_afk", "overworld_afk_bot01","tpplace mob_afk"),
             createContentButton(Resource.BACK_text, "", () -> super.switchContent(overworldSide))
     );
     List<PlaceListButton> pig_man_subButtons = Arrays.asList(
@@ -86,8 +86,8 @@ public class PlaceListScreen extends SideBarScreen
     );
 
     List<PlaceListButton> guardian_subButtons = Arrays.asList(
-            createContentButton(Resource.RESOURCE_text, "mob_resource", "tpplace guardian_resource"),
-            createContentButton(Resource.AFK_text, "mob_afk", "tpplace guardian_afk"),
+            createContentButton(Resource.RESOURCE_text,  "mob_resource", "nether_resource", "tpplace guardian_resource"),
+            createContentButton(Resource.AFK_text, "mob_afk", "overworld_afk_bot02","tpplace guardian_afk"),
             createContentButton(Resource.BACK_text, "back", () -> super.switchContent(overworldSide))
     );
     //SubMenuType
@@ -101,7 +101,7 @@ public class PlaceListScreen extends SideBarScreen
             createContentButton(Resource.IRON_text, "iron", "tpplace iron"),
             createContentButton(Resource.FURNACE_text, "furnace", "tpplace furnace"),
             createContentButton(Resource.STONE_text, "stone", "tpplace stone"),
-            createContentButton(Resource.GUARDIAN_text, "guardian", () -> openSubMenu(guardian_subButtons))
+            createContentButton(Resource.GUARDIAN_text, "guardian", "multiDimension",() -> openSubMenu(guardian_subButtons))
     );
 
     List<PlaceListButton> netherButtons = Arrays.asList(

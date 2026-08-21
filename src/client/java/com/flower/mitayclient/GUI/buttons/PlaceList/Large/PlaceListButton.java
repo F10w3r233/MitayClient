@@ -18,9 +18,9 @@ public class PlaceListButton extends PlaceListPressable
         return new Builder(message, onPress);
     }
 
-    protected PlaceListButton(int x, int y, int width, int height, Component message, PressAction onPress, String iconName, Identifier iconIdentifier, PlayerSkin skin, String type, PlayerProfile profile)
+    protected PlaceListButton(int x, int y, int width, int height, Component message, PressAction onPress, String iconName, Identifier iconIdentifier, PlayerSkin skin, String type, PlayerProfile profile, String desc)
     {
-        super(x, y, width, height, message, iconName, iconIdentifier, skin, type, profile);
+        super(x, y, width, height, message, iconName, iconIdentifier, skin, type, profile, desc);
         this.onPress = onPress;
     }
 
@@ -48,6 +48,7 @@ public class PlaceListButton extends PlaceListPressable
         public PlayerSkin thisSkin;
         private String thisType;
         private PlayerProfile thisProfile;
+        private String thisDesc;
 
         public Builder(Component message, PressAction onPress) {
             this.message = message;
@@ -106,8 +107,13 @@ public class PlaceListButton extends PlaceListPressable
             return this;
         }
 
+        public Builder desc(String desc) {
+            thisDesc = desc;
+            return this;
+        }
+
         public PlaceListButton build() {
-            PlaceListButton buttonWidget = new PlaceListButton(this.x, this.y, this.width, this.height, this.message, this.onPress, thisIconName, thisIconIdentifier, thisSkin, thisType, thisProfile);
+            PlaceListButton buttonWidget = new PlaceListButton(this.x, this.y, this.width, this.height, this.message, this.onPress, thisIconName, thisIconIdentifier, thisSkin, thisType, thisProfile, thisDesc);
             return buttonWidget;
         }
 
