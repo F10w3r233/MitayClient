@@ -230,8 +230,8 @@ public class ChatKeywordDetector
             "刷怪塔·资源点",
             "刷怪塔·挂机点",
             "刷铁机",
-            "100倍速熔炉组 & 甘蔗农场",
-            "树场 & 刷石机",
+            "100倍速熔炉组",
+            "刷石机",
             "守卫者农场",
 
             "猪人塔",
@@ -245,31 +245,27 @@ public class ChatKeywordDetector
             "创造世界"
     );
 
-    public static Identifier getPlaceIcon(String place)
-    {
-        String enName = null;
-        switch (place)
-        {
-            case "重生点" -> enName = "spawnpoint";
-            case "交易所" -> enName = "exchange";
-            case "大本营" -> enName = "home";
-            case "刷怪塔·资源点" -> enName = "mob_resource";
-            case "刷怪塔·挂机点" -> enName = "mob_afk";
-            case "刷铁机" -> enName = "iron";
-            case "100倍速熔炉组 & 甘蔗农场" -> enName = "sugar_cane";
-            case "树场 & 刷石机" -> enName = "stone";
-            case "守卫者农场" -> enName = "guardian";
+    private static final Map<String, String> PLACE_TO_NAME = Map.ofEntries(
+            Map.entry("重生点", "spawnpoint"),
+            Map.entry("交易所", "exchange"),
+            Map.entry("大本营", "home"),
+            Map.entry("刷怪塔·资源点", "mob_resource"),
+            Map.entry("刷怪塔·挂机点", "mob_afk"),
+            Map.entry("刷铁机", "iron"),
+            Map.entry("100倍速熔炉组", "furnace"),
+            Map.entry("刷石机", "stone"),
+            Map.entry("守卫者农场", "guardian"),
+            Map.entry("猪人塔", "pig_man"),
+            Map.entry("凋零骷髅塔", "wither_skull"),
+            Map.entry("恶魂塔", "ghast_farm"),
+            Map.entry("主世界末地传送门", "end_portal"),
+            Map.entry("末地主岛", "end_mainland"),
+            Map.entry("小黑塔", "ender_man_farm"),
+            Map.entry("创造世界", "creative")
+    );
 
-            case "猪人塔" -> enName = "pig_man";
-            case "凋零骷髅塔" -> enName = "wither_skull";
-            case "恶魂塔" -> enName = "ghast_farm";
-
-            case "主世界末地传送门" -> enName = "end_portal";
-            case "末地主岛" -> enName = "end_mainland";
-            case "小黑塔" -> enName = "ender_man_farm";
-
-            case "创造世界" -> enName = "creative";
-        }
+    public static Identifier getPlaceIcon(String place) {
+        String enName = PLACE_TO_NAME.get(place);
         return PlaceListPressable.getIdentifier(enName);
     }
 
