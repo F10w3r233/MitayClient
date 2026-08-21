@@ -84,19 +84,24 @@ public class PlaceListScreen extends SideBarScreen
             createContentButton(Resource.AFK_text, "mob_afk", "tpplace ghast_farm_afk"),
             createContentButton(Resource.BACK_text, "back", () -> super.switchContent(netherSide))
     );
-    //SubMenuType
 
+    List<PlaceListButton> guardian_subButtons = Arrays.asList(
+            createContentButton(Resource.RESOURCE_text, "mob_resource", "tpplace guardian_resource"),
+            createContentButton(Resource.AFK_text, "mob_afk", "tpplace guardian_afk"),
+            createContentButton(Resource.BACK_text, "back", () -> super.switchContent(overworldSide))
+    );
+    //SubMenuType
 
 
     //ContentButtons
     List<PlaceListButton> overworldButtons = Arrays.asList(
-            createContentButton(Resource.EXCHANGE_text, "exchange", "tpplace trade"),
+//            createContentButton(Resource.EXCHANGE_text, "exchange", "tpplace trade"),
             createContentButton(Resource.TOWN_text, "home", "tpplace base"),
             createContentButton(Resource.MOB_TOWER_text, "mob_main", () -> openSubMenu(mob_tower_subButtons)),
             createContentButton(Resource.IRON_text, "iron", "tpplace iron"),
-            createContentButton(Resource.SUGAR_CANE_text, "sugar_cane", "tpplace sugar_cane"),
+            createContentButton(Resource.FURNACE_text, "furnace", "tpplace furnace"),
             createContentButton(Resource.STONE_text, "stone", "tpplace stone"),
-            createContentButton(Resource.GUARDIAN_text, "guardian", "tpplace guardian")
+            createContentButton(Resource.GUARDIAN_text, "guardian", () -> openSubMenu(guardian_subButtons))
     );
 
     List<PlaceListButton> netherButtons = Arrays.asList(

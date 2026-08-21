@@ -21,8 +21,9 @@
   "place.mitayclient.afk" : "掛け込みポイント",
   "place.mitayclient.back" : "帰還",
   "place.mitayclient.iron" : "鉄製刷筆機",
-  "place.mitayclient.sugar_cane" : "100倍炉とサトウキビ農場",
-  "place.mitayclient.stone" : "ツリーファームとストーンブラッシャー",
+  "place.mitayclient.furnace" : "100倍炉",
+  "place.mitayclient.sugar_cane" : "サトウキビ農場",
+  "place.mitayclient.stone" : "ストーンブラッシャー",
   "place.mitayclient.guardian" : "キーパー農場",
   "place.mitayclient.zoo" : "動物園",
 

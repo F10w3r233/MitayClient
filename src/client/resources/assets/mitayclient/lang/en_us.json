@@ -21,8 +21,9 @@
   "place.mitayclient.afk" : "AFK",
   "place.mitayclient.back" : "Back",
   "place.mitayclient.iron" : "Iron Farm",
-  "place.mitayclient.sugar_cane" : "100x Furnace & Sugarcane Farm",
-  "place.mitayclient.stone" : "Tree & Stone Farm",
+  "place.mitayclient.furnace" : "100x furnace",
+  "place.mitayclient.sugar_cane" : "Sugar Cane Farm",
+  "place.mitayclient.stone" : "Stone Farm",
   "place.mitayclient.guardian" : "Guardian Farm",
   "place.mitayclient.zoo" : "Zoo",
 

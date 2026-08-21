@@ -51,6 +51,7 @@ public abstract class PlaceListPressable extends AbstractWidget
     public static final Identifier SUGAR_CANE = ModIdentifier.get("textures/gui/hud/places/sugar_cane.png");
     public static final Identifier GUARDIAN = ModIdentifier.get("textures/gui/hud/places/guardian.png");
     public static final Identifier STONE = ModIdentifier.get("textures/gui/hud/places/stone.png");
+    public static final Identifier FURNACE = ModIdentifier.get("textures/gui/hud/places/furnace.png");
     public static final Identifier SPAWNPOINT = ModIdentifier.get("textures/gui/hud/places/spawnpoint.png");
 
 
@@ -113,6 +114,7 @@ public abstract class PlaceListPressable extends AbstractWidget
             case "wither_skull" -> WITHER_SKULL;
             case "guardian" -> GUARDIAN;
             case "stone" -> STONE;
+            case "furnace" -> FURNACE;
             case "ghast_farm" -> GHAST_FARM;
             case "spawnpoint" -> SPAWNPOINT;
 

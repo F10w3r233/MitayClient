@@ -92,6 +92,7 @@ public class Resource
     public static Component BACK_text = Component.translatable("place.mitayclient.back");
     public static Component IRON_text = Component.translatable("place.mitayclient.iron");
     public static Component SUGAR_CANE_text = Component.translatable("place.mitayclient.sugar_cane");
+    public static Component FURNACE_text = Component.translatable("place.mitayclient.furnace");
     public static Component STONE_text = Component.translatable("place.mitayclient.stone");
     public static Component GUARDIAN_text = Component.translatable("place.mitayclient.guardian");
     public static Component PIG_MAN_text = Component.translatable("place.mitayclient.pigman");

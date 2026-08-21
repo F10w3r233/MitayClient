@@ -21,8 +21,9 @@
   "place.mitayclient.afk" : "挂机点",
   "place.mitayclient.back" : "返回",
   "place.mitayclient.iron" : "刷铁机",
-  "place.mitayclient.sugar_cane" : "100x熔炉 & 甘蔗农场",
-  "place.mitayclient.stone" : "树场 & 刷石机",
+  "place.mitayclient.furnace" : "100倍速熔炉组",
+  "place.mitayclient.sugar_cane" : "甘蔗农场",
+  "place.mitayclient.stone" : "刷石机",
   "place.mitayclient.guardian" : "守卫者农场",
   "place.mitayclient.zoo" : "动物园",
 
