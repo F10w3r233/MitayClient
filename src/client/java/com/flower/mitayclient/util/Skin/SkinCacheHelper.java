@@ -12,9 +12,12 @@ import net.minecraft.world.entity.player.PlayerSkin;
 import net.minecraft.world.item.component.ResolvableProfile;
 import org.joml.Matrix3x2fStack;
 
+import java.util.Map;
 import java.util.Optional;
+import java.util.Set;
 import java.util.UUID;
 import java.util.concurrent.CompletableFuture;
+import java.util.concurrent.ConcurrentHashMap;
 import java.util.function.Supplier;
 
 import static net.minecraft.client.resources.DefaultPlayerSkin.get;
@@ -27,7 +30,6 @@ import static net.minecraft.client.resources.DefaultPlayerSkin.getDefaultSkin;
 public final class SkinCacheHelper
 {
     private static final Minecraft MC = Minecraft.getInstance();
-
 
     public static Identifier getSkinTexture(String name)
     {
@@ -57,27 +59,10 @@ public final class SkinCacheHelper
 
         return skin.body().texturePath();
     }
-
-//    /**
+//    /*
 //     * 在 GUI 上渲染指定玩家的头部皮肤。
 //     * 如果皮肤已经下载并缓存，直接使用；否则先显示默认皮肤，并触发异步下载。
-//     *
-//     * @param graphics GuiGraphicsExtractor（渲染上下文）
-//     * @param uuid     玩家 UUID
-//     * @param x        左上角 X 坐标
-//     * @param y        左上角 Y 坐标
-//     * @param size     渲染尺寸（像素，建议 8 的倍数）
 //     */
-//    public static void renderHead(GuiGraphicsExtractor graphics, UUID uuid, int x, int y, int size)
-//    {
-//        ResolvableProfile profile = ResolvableProfile.createUnresolved(uuid);
-//        // createLookup 返回一个 Supplier，每次调用都会返回当前可用皮肤（默认或已加载）
-//        Supplier<PlayerSkinRenderCache.RenderInfo> skinSupplier = MC.playerSkinRenderCache().createLookup(profile);
-//        PlayerSkin skin = skinSupplier.get().playerSkin();
-//        // 提取并绘制头部区域（包含帽子层）
-//        PlayerFaceExtractor.extractRenderState(graphics, skin, x, y, size);
-//    }
-
     public static void renderHead(GuiGraphicsExtractor graphics, String name, int x, int y, int size)
     {
         renderHead(graphics, name, x, y, size, 0);
@@ -102,28 +87,6 @@ public final class SkinCacheHelper
             // 纹理未就绪时不做任何事，下一帧再试
         }
         // 如果连基本查找结果都没有（第一次遇到该玩家），也不绘制，交给预加载后台慢慢处理
-    }
-
-    /**
-     * 强制预加载皮肤（同步等待完成），保证后续渲染直接使用真实皮肤。
-     * 建议在玩家加入游戏、或打开包含头像的界面时调用一次。
-     */
-    public static CompletableFuture<Void> preloadSkinAsync(UUID uuid) {
-        return CompletableFuture.runAsync(() -> {
-            ResolvableProfile profile = ResolvableProfile.createUnresolved(uuid);
-            // 使用 join 但运行在异步线程池
-            MC.playerSkinRenderCache().lookup(profile).join();
-        });
-    }
-
-    /**
-     * 检查皮肤是否已成功加载到内存缓存（仅表示当前会话中已加载）。
-     * 注意：即使返回 false，磁盘上也可能已有文件（但未加载到缓存）。
-     */
-    public static boolean isSkinCachedInMemory(UUID uuid) {
-        ResolvableProfile profile = ResolvableProfile.createUnresolved(uuid);
-        Optional<PlayerSkinRenderCache.RenderInfo> current = MC.playerSkinRenderCache().lookup(profile).getNow(Optional.empty());
-        return current.isPresent();
     }
 
     public static void renderHeadWith3D(GuiGraphicsExtractor graphics, String name, int x, int y, int size, float threeDeeNess)
@@ -158,4 +121,25 @@ public final class SkinCacheHelper
     }
 
 
+    public static CompletableFuture<Void> preloadSkinAsync(ResolvableProfile profile) {
+        // 注意：不要把 join 放到主线程；这里用异步线程等待
+        return CompletableFuture.runAsync(() -> MC.playerSkinRenderCache().lookup(profile).join());
+    }
+
+    // ===================== 缓存失效 =====================
+    public static void invalidateSkin(ResolvableProfile profile) {
+        try {
+            PlayerSkinRenderCache cache = MC.playerSkinRenderCache();
+            // 优先尝试按 profile 精确清除
+            cache.getClass().getMethod("clear", ResolvableProfile.class).invoke(cache, profile);
+        } catch (NoSuchMethodException e) {
+            // 旧映射没有按 profile 清除的方法，退化为清空全部
+            try {
+                PlayerSkinRenderCache cache = MC.playerSkinRenderCache();
+                cache.getClass().getMethod("clear").invoke(cache);
+            } catch (Exception ignored) {
+            }
+        } catch (Exception ignored) {
+        }
+    }
 }
