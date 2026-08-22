@@ -106,12 +106,36 @@
                 Minecraft.getInstance().setScreen(null);
             }).icon(icon).dimensions(0, 0, 210, 30).build();
         }
+        //带desc
+        public static PlaceListButton createContentButton(Component name, Identifier icon, String desc, String command)
+        {
+            return PlaceListButton.builder(name, button -> {
+                sendChatCommand(command);
+                Minecraft.getInstance().setScreen(null);
+            })
+                    .icon(icon)
+                    .desc(desc)
+                    .dimensions(0, 0, 210, 30)
+                    .build();
+        }
         public static PlaceListButton createContentButton(Component name, String icon, String command)
         {
             return PlaceListButton.builder(name, button -> {
                 sendChatCommand(command);
                 Minecraft.getInstance().setScreen(null);
             }).icon(icon).dimensions(0, 0, 210, 30).build();
+        }
+
+        public static PlaceListButton createContentButton(Component name, String icon, String desc, String command)
+        {
+            return PlaceListButton.builder(name, button -> {
+                sendChatCommand(command);
+                Minecraft.getInstance().setScreen(null);
+            })
+                    .icon(icon)
+                    .desc(desc)
+                    .dimensions(0, 0, 210, 30)
+                    .build();
         }
         public static PlaceListButton createContentButton(Component name, PlayerSkin skin, String command)
         {
@@ -130,10 +154,27 @@
             return PlaceListButton.builder(name, button -> action.run())
                     .icon(icon).dimensions(0, 0, 210, 30).build();
         }
+        public static PlaceListButton createContentButton(Component name, Identifier icon, String desc, Runnable action)
+        {
+            return PlaceListButton.builder(name, button -> action.run())
+                    .icon(icon)
+                    .desc(desc)
+                    .dimensions(0, 0, 210, 30)
+                    .build();
+        }
         public static PlaceListButton createContentButton(Component name, String icon, Runnable action)
         {
             return PlaceListButton.builder(name, button -> action.run())
                     .icon(icon).dimensions(0, 0, 210, 30).build();
+        }
+
+        public static PlaceListButton createContentButton(Component name, String icon, String desc, Runnable action)
+        {
+            return PlaceListButton.builder(name, button -> action.run())
+                    .icon(icon)
+                    .desc(desc)
+                    .dimensions(0, 0, 210, 30)
+                    .build();
         }
 
         public static SwitchButton createSettingsButton(Component name, boolean flag, Runnable action)
