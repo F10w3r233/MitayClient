@@ -126,7 +126,7 @@
             }).icon(icon).dimensions(0, 0, 210, 30).build();
         }
 
-        public static PlaceListButton createContentButton(Component name, String icon, String desc, String command)
+        public static PlaceListButton createContentButton(Component name, String icon, String desc, List<String> output, String command)
         {
             return PlaceListButton.builder(name, button -> {
                 sendChatCommand(command);
@@ -134,6 +134,7 @@
             })
                     .icon(icon)
                     .desc(desc)
+                    .output(output)
                     .dimensions(0, 0, 210, 30)
                     .build();
         }

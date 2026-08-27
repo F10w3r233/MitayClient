@@ -194,3 +194,5 @@
            - ver 4.5.1 - 优化了 ChatHudMixin的字符串构建性能
            - ver 4.5.2 - 优化了 设置类的性能，减少IO开支
 2026.08.18 - ver 4.5.3 - 优化了药水效果显示性能；修复了浅色模式toolbar不显示等级bug
+2026.08.22 - ver 4.6 - 新增 PlaceListScreen 的双维度装置说明
+2026.08.28 - ver 4.6.1 - 实现 PlaceListScreen 显示装置产出物品

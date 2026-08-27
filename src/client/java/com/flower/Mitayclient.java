@@ -8,6 +8,7 @@ import com.flower.mitayclient.util.Data.DisplayConfig;
 import com.flower.mitayclient.util.ChatHistory.TextSerializer;
 import com.flower.mitayclient.util.ModIdentifier;
 import com.flower.mitayclient.util.Skin.SkinCacheHelper;
+import com.mojang.authlib.GameProfile;
 import net.fabricmc.api.ModInitializer;
 
 import net.fabricmc.fabric.api.client.message.v1.ClientReceiveMessageEvents;
@@ -20,6 +21,7 @@ import net.minecraft.client.DeltaTracker;
 import net.minecraft.client.Minecraft;
 import net.minecraft.client.gui.GuiGraphicsExtractor;
 import net.minecraft.resources.Identifier;
+import net.minecraft.world.item.component.ResolvableProfile;
 
 import java.util.UUID;
 
@@ -52,13 +54,17 @@ public class Mitayclient implements ModInitializer
 		ClientPlayConnectionEvents.JOIN.register(((listener, sender, client) -> {
 			// 延迟 1 秒后预加载所有玩家，确保 player list 已就绪
 			client.execute(() -> {
-				client.getConnection().getOnlinePlayers().forEach(playerInfo -> {
-					UUID uuid = playerInfo.getProfile().id();
-					SkinCacheHelper.preloadSkinAsync(uuid);
-				});
+				if (client.getConnection() == null) return;
 
-//				ClientPlayNetworking.send(new RequestTitlesPayload());
-//				System.out.println("请求成功");
+				for (var playerInfo : client.getConnection().getOnlinePlayers()) {
+					// 关键：传完整 ResolvableProfile，保留服务器下发的皮肤属性
+					SkinCacheHelper.preloadSkinAsync(ResolvableProfile.createResolved(playerInfo.getProfile()));
+				}
+
+//				client.getConnection().getOnlinePlayers().forEach(playerInfo -> {
+//					GameProfile profile = playerInfo.getProfile();
+//					SkinCacheHelper.preloadSkinAsync(ResolvableProfile.createResolved(profile));
+//				});
 			});
 		}));
 

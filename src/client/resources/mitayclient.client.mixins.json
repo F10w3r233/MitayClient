@@ -17,6 +17,7 @@
     "PlayerListHudMixin",
     //    "ScreenMixin",
     "SplashScreenMixin",
-    "TitleScreenMixin"
+    "TitleScreenMixin",
+    "TooltipMixin"
   ]
 }

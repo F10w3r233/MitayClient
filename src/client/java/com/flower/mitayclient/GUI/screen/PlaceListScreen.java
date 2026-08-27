@@ -68,26 +68,27 @@ public class PlaceListScreen extends SideBarScreen
     Map<String, List<PlaceListButton>> subMenuButtonsMap = new LinkedHashMap<>();
 
     //SubMenuButtons
+    List<String> mob_farm_outputs = List.of("rotten_flesh", "bone", "arrow", "gunpowder", "string", "slime_ball", "redstone", "spider_eye", "sugar", "stick", "glass_bottle", "glowstone_dust");
     List<PlaceListButton> mob_tower_subButtons = Arrays.asList(
-            createContentButton(Resource.RESOURCE_text, "mob_resource", "overworld_resource","tpplace mob_resource"),
-            createContentButton(Resource.AFK_text, "mob_afk", "overworld_afk_bot01","tpplace mob_afk"),
+            createContentButton(Resource.RESOURCE_text, "mob_resource", "overworld_resource", mob_farm_outputs,"tpplace mob_resource"),
+            createContentButton(Resource.AFK_text, "mob_afk", "overworld_afk_bot01",null,"tpplace mob_afk"),
             createContentButton(Resource.BACK_text, "", () -> super.switchContent(overworldSide))
     );
     List<PlaceListButton> pig_man_subButtons = Arrays.asList(
-            createContentButton(Resource.RESOURCE_text, "mob_resource", "tpplace pigman_resource"),
+            createContentButton(Resource.RESOURCE_text, "mob_resource", "", List.of("gold_nugget", "gold_ingot", "gold_block"), "tpplace pigman_resource"),
             createContentButton(Resource.AFK_text, "mob_afk", "tpplace pigman_afk"),
             createContentButton(Resource.BACK_text, "back", () -> super.switchContent(netherSide))
     );
 
     List<PlaceListButton> ghast_farm_subButtons = Arrays.asList(
-            createContentButton(Resource.RESOURCE_text, "mob_resource", "tpplace ghast_farm_resource"),
-            createContentButton(Resource.AFK_text, "mob_afk", "tpplace ghast_farm_afk"),
+            createContentButton(Resource.RESOURCE_text, "mob_resource", "overworld_resource", List.of("ghast_tear", "gunpowder"), "tpplace ghast_farm_resource"),
+            createContentButton(Resource.AFK_text, "mob_afk", "nether_afk_bot03",null,"tpplace ghast_farm_afk"),
             createContentButton(Resource.BACK_text, "back", () -> super.switchContent(netherSide))
     );
 
     List<PlaceListButton> guardian_subButtons = Arrays.asList(
-            createContentButton(Resource.RESOURCE_text,  "mob_resource", "nether_resource", "tpplace guardian_resource"),
-            createContentButton(Resource.AFK_text, "mob_afk", "overworld_afk_bot02","tpplace guardian_afk"),
+            createContentButton(Resource.RESOURCE_text,  "mob_resource", "nether_resource", List.of("prismarine_shard", "prismarine_crystals", "cod", "ink_sac"), "tpplace guardian_resource"),
+            createContentButton(Resource.AFK_text, "mob_afk", "overworld_afk_bot02",null,"tpplace guardian_afk"),
             createContentButton(Resource.BACK_text, "back", () -> super.switchContent(overworldSide))
     );
     //SubMenuType
@@ -98,21 +99,21 @@ public class PlaceListScreen extends SideBarScreen
 //            createContentButton(Resource.EXCHANGE_text, "exchange", "tpplace trade"),
             createContentButton(Resource.TOWN_text, "home", "tpplace base"),
             createContentButton(Resource.MOB_TOWER_text, "mob_main", () -> openSubMenu(mob_tower_subButtons)),
-            createContentButton(Resource.IRON_text, "iron", "tpplace iron"),
+            createContentButton(Resource.IRON_text, "iron", "", List.of("iron_ingot", "poppy"), "tpplace iron"),
             createContentButton(Resource.FURNACE_text, "furnace", "tpplace furnace"),
-            createContentButton(Resource.STONE_text, "stone", "tpplace stone"),
+            createContentButton(Resource.STONE_text, "stone", "", List.of("cobblestone"),"tpplace stone"),
             createContentButton(Resource.GUARDIAN_text, "guardian", "multiDimension",() -> openSubMenu(guardian_subButtons))
     );
 
     List<PlaceListButton> netherButtons = Arrays.asList(
             createContentButton(Resource.PIG_MAN_text, "pig_man", () -> openSubMenu(pig_man_subButtons)),
-            createContentButton(Resource.WITHER_SKULL_text, "wither_skull", "tpplace wither_skull_farm"),
-            createContentButton(Resource.GHAST_FARM_text, "ghast_farm", () -> openSubMenu(ghast_farm_subButtons))
+            createContentButton(Resource.WITHER_SKULL_text, "wither_skull", "",List.of("wither_skeleton_skull", "coal"),"tpplace wither_skull_farm"),
+            createContentButton(Resource.GHAST_FARM_text, "ghast_farm", "multiDimension", () -> openSubMenu(ghast_farm_subButtons))
     );
     List<PlaceListButton> endButtons = Arrays.asList(
             createContentButton(Resource.PORTAL_text, "end_portal", () -> Minecraft.getInstance().setScreen(null)),
             createContentButton(Resource.MAINLAND_text, "end_mainland", "tpplace end_mainland"),
-            createContentButton(Resource.ENDER_MAN_text, "ender_man_farm", "tpplace enderman_farm")
+            createContentButton(Resource.ENDER_MAN_text, "ender_man_farm", "", List.of("ender_pearl"),"tpplace enderman_farm")
     );
     List<PlaceListButton> creativeButtons = Arrays.asList(
             createContentButton(Resource.CREATIVE, "creative", "tpplace creativeWorld")
