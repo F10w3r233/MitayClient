@@ -8,6 +8,9 @@ import net.minecraft.network.chat.Component;
 import net.minecraft.resources.Identifier;
 import net.minecraft.world.entity.player.PlayerSkin;
 
+import java.util.List;
+import java.util.Map;
+
 
 @Environment(EnvType.CLIENT)
 public class PlaceListButton extends PlaceListPressable
@@ -18,9 +21,9 @@ public class PlaceListButton extends PlaceListPressable
         return new Builder(message, onPress);
     }
 
-    protected PlaceListButton(int x, int y, int width, int height, Component message, PressAction onPress, String iconName, Identifier iconIdentifier, PlayerSkin skin, String type, PlayerProfile profile, String desc)
+    protected PlaceListButton(int x, int y, int width, int height, Component message, PressAction onPress, String iconName, Identifier iconIdentifier, PlayerSkin skin, String type, PlayerProfile profile, String desc, List<String> output)
     {
-        super(x, y, width, height, message, iconName, iconIdentifier, skin, type, profile, desc);
+        super(x, y, width, height, message, iconName, iconIdentifier, skin, type, profile, desc, output);
         this.onPress = onPress;
     }
 
@@ -49,6 +52,7 @@ public class PlaceListButton extends PlaceListPressable
         private String thisType;
         private PlayerProfile thisProfile;
         private String thisDesc;
+        private List<String> thisOutput;
 
         public Builder(Component message, PressAction onPress) {
             this.message = message;
@@ -112,8 +116,13 @@ public class PlaceListButton extends PlaceListPressable
             return this;
         }
 
+        public Builder output(List<String> output) {
+            thisOutput = output;
+            return this;
+        }
+
         public PlaceListButton build() {
-            PlaceListButton buttonWidget = new PlaceListButton(this.x, this.y, this.width, this.height, this.message, this.onPress, thisIconName, thisIconIdentifier, thisSkin, thisType, thisProfile, thisDesc);
+            PlaceListButton buttonWidget = new PlaceListButton(this.x, this.y, this.width, this.height, this.message, this.onPress, thisIconName, thisIconIdentifier, thisSkin, thisType, thisProfile, thisDesc, thisOutput);
             return buttonWidget;
         }
 

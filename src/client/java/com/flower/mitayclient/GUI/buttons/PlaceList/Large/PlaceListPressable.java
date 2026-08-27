@@ -1,10 +1,10 @@
 package com.flower.mitayclient.GUI.buttons.PlaceList.Large;
 
 import com.flower.Mitayclient;
+import com.flower.mitayclient.GUI.HUD.ToolBarHudRenderer;
 import com.flower.mitayclient.GUI.screen.ProfileUtil.PlayerProfile;
 import com.flower.mitayclient.util.MitayUtils;
 import com.flower.mitayclient.util.ModIdentifier;
-import com.flower.mitayclient.util.Resource;
 import com.flower.mitayclient.util.Skin.SkinCacheHelper;
 import net.fabricmc.api.EnvType;
 import net.fabricmc.api.Environment;
@@ -15,12 +15,22 @@ import net.minecraft.client.gui.components.PlayerFaceExtractor;
 import net.minecraft.client.gui.components.Tooltip;
 import net.minecraft.client.input.MouseButtonEvent;
 import net.minecraft.client.renderer.RenderPipelines;
+import net.minecraft.core.Holder;
 import net.minecraft.core.registries.BuiltInRegistries;
 import net.minecraft.network.chat.Component;
+import net.minecraft.network.chat.MutableComponent;
+import net.minecraft.network.chat.contents.TranslatableContents;
 import net.minecraft.resources.Identifier;
 import net.minecraft.util.CommonColors;
 import net.minecraft.world.entity.player.PlayerSkin;
+import net.minecraft.world.item.Item;
+import org.jetbrains.annotations.Nullable;
 
+import java.util.List;
+import java.util.Optional;
+import java.util.concurrent.atomic.AtomicInteger;
+
+import static com.flower.mitayclient.GUI.HUD.ToolBarHudRenderer.drawScaledItem;
 import static com.flower.mitayclient.util.MitayUtils.getWorldIcon;
 import static com.flower.mitayclient.util.Resource.*;
 
@@ -85,8 +95,9 @@ public abstract class PlaceListPressable extends AbstractWidget
     String type;
     PlayerProfile profile;
     String desc;
+    List<String> output;
 
-    public PlaceListPressable(int i, int j, int k, int l, Component text, String iconName, Identifier iconIdentifier, PlayerSkin skin, String type, PlayerProfile profile, String desc)
+    public PlaceListPressable(int i, int j, int k, int l, Component text, String iconName, Identifier iconIdentifier, PlayerSkin skin, String type, PlayerProfile profile, String desc, List<String> output)
     {
         super(i, j, k, l, text);
         this.iconName = iconName;
@@ -95,6 +106,7 @@ public abstract class PlaceListPressable extends AbstractWidget
         this.type = type;
         this.profile = profile;
         this.desc = desc;
+        this.output = output;
     }
     public abstract void onPress();
 
@@ -220,28 +232,31 @@ public abstract class PlaceListPressable extends AbstractWidget
 
         //desc 规范：
         /*
-        * 1.     multiDimension -> 在右下角渲染一个 传送门和草方块图标
-        * 2.     (overworld/nether)_afk_bot201 -> 在右下角渲染一个 草方块图标/传送门图标，并告知
-        * 3.     (overworld/nether)_resource -> 在右下角渲染一个 传送门图标，在tooltip渲染所有物品
-        * */
+         * 1.     multiDimension -> 在右下角渲染一个 传送门和草方块图标
+         * 2.     (overworld/nether)_afk_bot201 -> 在右下角渲染一个 草方块图标/传送门图标，并告知
+         * 3.     (overworld/nether)_resource -> 在右下角渲染一个 传送门图标，在tooltip渲染所有物品
+         * 3.     (overworld/nether)_resource_output ->
+         * 3.     output ->
+         * */
+        String description = "";
+        int tooltipWidth = 0;
         if (desc != null)
         {
-            String description = "";
-            Identifier icon = null;
+            Identifier dimensionIcon = null;
 
             if (desc.contains("multiDimension"))
             {
                 description += "§6双维度装置§f";
-                icon = MULTI_DIMENSION;
+                dimensionIcon = MULTI_DIMENSION;
             } else {
                 if (desc.contains("overworld"))
                 {
                     description += "§6主世界侧§f\n";
-                    icon = OVERWORLD_icon;
+                    dimensionIcon = OVERWORLD_SIDE;
                 }else if(desc.contains("nether"))
                 {
                     description += "§6地狱侧§f\n";
-                    icon = NETHER_SIDE;
+                    dimensionIcon = NETHER_SIDE;
                 }
 
                 if (desc.contains("afk"))
@@ -251,21 +266,34 @@ public abstract class PlaceListPressable extends AbstractWidget
                             "挂机完可将此 §6" + desc.split("_")[2] + "§f 帐号退出游戏";
                 }else if(desc.contains("resource"))
                 {
-                    description += "§7拿取资源处§f\n" +
-                            "若资源不足，请看§3挂机点§f的说明操作\n" +
-                            "产出：\n";
+                    description += "§7 拿取资源处§f\n\n";
+
                 }
             }
 
-            if(icon != null)
+            if(dimensionIcon != null)
             {
-                context.blit(RenderPipelines.GUI_TEXTURED, icon, getX() + getWidth() - 16, getY()+15, 0,0, 12,12,12,12);
+                context.blit(RenderPipelines.GUI_TEXTURED, dimensionIcon, getX() + getWidth() - 16, getY()+15, 0,0, 12,12,12,12);
             }
-            setTooltip(Tooltip.create(Component.literal(description)));
         }
+
+
+        if (output != null && !output.isEmpty())
+        {
+            //填写output参数，必须也保证填写desc
+            assert desc != null;
+//            if (desc.contains("resource"))
+            description += "§3产出：\n";
+            for (int i = 0; i < output.size();i++)
+            {
+                boolean isLastLine = i == output.size() -1;
+                description += "§f   $" + output.get(i) + (isLastLine ? "" : "\n");
+            }
+//            description += "\n\n§7若资源不足，请看§3挂机点§7的说明操作";
+        }
+
+        setTooltip(Tooltip.create(Component.literal(description)));
     }
-
-
 
     @Override
     public void onClick(MouseButtonEvent click, boolean doubled) {

@@ -56,7 +56,7 @@ public class TitleScreenMixin extends Screen
     @Unique
     boolean isReleaseVersion = true;
     @Unique
-    String version = "4.5.2";
+    String version = "4.6.1";
 //    static String ip = "g.a1.ocent.net:10130";
     @Unique
     final String IP = isReleaseVersion ? "g.a1.ocent.net:10130" : "127.0.0.1";
