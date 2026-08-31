@@ -1,10 +1,12 @@
 package com.flower.mitayclient.util.Skin;
 
 
+import com.mojang.authlib.GameProfile;
 import com.mojang.blaze3d.vertex.PoseStack;
 import net.minecraft.client.Minecraft;
 import net.minecraft.client.gui.GuiGraphicsExtractor;
 import net.minecraft.client.gui.components.PlayerFaceExtractor;
+import net.minecraft.client.multiplayer.PlayerInfo;
 import net.minecraft.client.renderer.PlayerSkinRenderCache;
 import net.minecraft.client.renderer.RenderPipelines;
 import net.minecraft.resources.Identifier;
@@ -70,6 +72,7 @@ public final class SkinCacheHelper
 
     public static void renderHead(GuiGraphicsExtractor graphics, String name, int x, int y, int size, int color)
     {
+//        ResolvableProfile profile = ResolvableProfile.createResolved(new GameProfile(uuid, name));
         ResolvableProfile profile = ResolvableProfile.createUnresolved(name);
         // 获取已完成的查找结果，不触发新的异步任务，不阻塞
         Optional<PlayerSkinRenderCache.RenderInfo> opt =
@@ -78,6 +81,13 @@ public final class SkinCacheHelper
         if (opt.isPresent())
         {
             PlayerSkin skin = opt.get().playerSkin();
+            if (MC.getConnection() != null)
+            {
+                if (MC.getConnection().getPlayerInfo(name) != null)
+                {
+                    skin = MC.getConnection().getPlayerInfo(name).getSkin();
+                }
+            }
             // 检查纹理是否已经实际注册（已上传）
             Identifier texture = skin.body().texturePath();
             if (MC.getTextureManager().getTexture(texture) != null)

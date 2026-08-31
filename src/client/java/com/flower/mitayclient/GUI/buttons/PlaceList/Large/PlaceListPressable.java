@@ -235,8 +235,7 @@ public abstract class PlaceListPressable extends AbstractWidget
          * 1.     multiDimension -> 在右下角渲染一个 传送门和草方块图标
          * 2.     (overworld/nether)_afk_bot201 -> 在右下角渲染一个 草方块图标/传送门图标，并告知
          * 3.     (overworld/nether)_resource -> 在右下角渲染一个 传送门图标，在tooltip渲染所有物品
-         * 3.     (overworld/nether)_resource_output ->
-         * 3.     output ->
+         * 4.     (overworld/nether)_resource_output ->
          * */
         String description = "";
         int tooltipWidth = 0;
