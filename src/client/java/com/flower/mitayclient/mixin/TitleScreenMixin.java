@@ -54,9 +54,9 @@ import static com.flower.mitayclient.GUI.HUD.ToolBarHudRenderer.drawScaledText;
 public class TitleScreenMixin extends Screen
 {
     @Unique
-    boolean isReleaseVersion = false;
+    boolean isReleaseVersion = true;
     @Unique
-    String version = "4.6.2";
+    String version = "4.6.3";
 //    static String ip = "g.a1.ocent.net:10130";
     @Unique
     final String IP = isReleaseVersion ? "g.a1.ocent.net:10130" : "127.0.0.1";

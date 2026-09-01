@@ -191,8 +191,8 @@ public class PlaceListScreen extends SideBarScreen
     MultiColumnTextFieldWidget coordField = new MultiColumnTextFieldWidget(10, 40, 150, 50, Component.literal("坐标"));
     private ComboBoxWidget comboBox;
     SmallButton confirmButton;
-    AccessibilityButton addButton = AccessibilityButton.builder(Component.literal("添加一个地点"), button ->
-    {
+    AccessibilityButton addButton = AccessibilityButton.builder(Component.literal("添加一个地点"),
+            button -> {
         for (PlaceListButton sharedPlaceButton : sharedPlaceButtons)
         {
             super.scrollArea.children.remove(sharedPlaceButton);
@@ -204,7 +204,7 @@ public class PlaceListScreen extends SideBarScreen
         super.scrollArea.children.add(descField);
         super.scrollArea.children.add(coordField);
         super.scrollArea.children.add(confirmButton);
-    }).type("add").dimensions(panelX + 318, panelY + 230, 30, 30).build();
+    }).type("add").dimensions(this.panelX + 318, this.panelY + 230, 30, 30).build();
 
     @Override
     public <T extends AbstractWidget> void showContent(List<T> buttons, Class<T> type)

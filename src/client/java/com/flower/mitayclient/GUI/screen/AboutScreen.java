@@ -10,8 +10,8 @@ import net.minecraft.resources.Identifier;
 
 public class AboutScreen extends Screen
 {
-    Identifier bright = ModIdentifier.get("textures/gui/screen/about.png");
-    Identifier dark = ModIdentifier.get("textures/gui/screen/about_dark.png");
+    Identifier bright = ModIdentifier.get("textures/gui/screen/about/about.png");
+    Identifier dark = ModIdentifier.get("textures/gui/screen/about/about_dark.png");
     public AboutScreen(Component title)
     {
         super(title);
