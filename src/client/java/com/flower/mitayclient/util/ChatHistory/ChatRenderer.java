@@ -116,8 +116,8 @@ public class ChatRenderer
             String s = nameStr.split("]")[1].trim();
         } catch (ArrayIndexOutOfBoundsException e)
         {
-            System.out.println(nameStr);
-            System.out.println(message);
+//            System.out.println(nameStr);
+//            System.out.println(message);
         }
 
 

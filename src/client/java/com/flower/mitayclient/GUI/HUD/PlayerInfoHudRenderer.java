@@ -39,7 +39,7 @@ public class PlayerInfoHudRenderer
 
     static String orginalWorld;
     static Component orginalPlace;
-
+    static Minecraft client = Minecraft.getInstance();
 
     public static void render(GuiGraphicsExtractor context)
     {
@@ -47,7 +47,7 @@ public class PlayerInfoHudRenderer
         {
             playerNameColor = MitayUtils.getNameColor(getCameraPlayer().getScoreboardName());
 
-            Minecraft client = Minecraft.getInstance();
+
 
             //获取玩家延迟颜色
             if(client != null)

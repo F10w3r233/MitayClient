@@ -32,12 +32,12 @@ public class StatusEffectHudRenderer
     static int x5 = 0;
 
     static int originalSize;
-
+    static Minecraft client = Minecraft.getInstance();
     public static void render(GuiGraphicsExtractor context)
     {
         if(Mitayclient.getConfig().isEffectShown())
         {
-            Minecraft client = Minecraft.getInstance();
+
 
             Collection<MobEffectInstance> collection = client.player.getActiveEffects();
             List<Runnable> list = Lists.newArrayListWithExpectedSize(collection.size());

@@ -16,12 +16,12 @@ public class TargetPlayerInfoHudRenderer
 {
     static Identifier status_bar;
     static PlayerInfo targetPlayer;
-
+    static Minecraft client = Minecraft.getInstance();
     public static void render(GuiGraphicsExtractor context)
     {
         if(!Minecraft.getInstance().options.hideGui)
         {
-            Minecraft client = Minecraft.getInstance();
+
 
             if(Mitayclient.getConfig().isDarkShown())
             {

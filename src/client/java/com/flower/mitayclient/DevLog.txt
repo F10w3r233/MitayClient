@@ -198,3 +198,4 @@
 2026.08.28 - ver 4.6.1 - 实现 PlaceListScreen 显示装置产出物品
 2026.08.31 - ver 4.6.2 - 聊天框头像实时更新
 2026.08.31 - ver 4.6.3 - 将 药水效果显示回滚到旧版
+2026.08.31 - ver 4.6.3.1 - 将所有的HUD的render()中的Minecraft.getInstance()都替换为了成员变量client

@@ -74,15 +74,16 @@ public class ToolBarHudRenderer
     static int rightBiaHeight = 0;
 
     private static int lastScreenWidth = -1;
+    static Minecraft client = Minecraft.getInstance();
 
     public static void render(GuiGraphicsExtractor context)
     {
 
         if(Mitayclient.getConfig().isToolbarShown())
         {
-            if(!Minecraft.getInstance().options.hideGui)
+            if(!client.options.hideGui)
             {
-                int currentWidth = Minecraft.getInstance().getWindow().getGuiScaledWidth();
+                int currentWidth = client.getWindow().getGuiScaledWidth();
                 if (lastScreenWidth != currentWidth)
                 {
                     k1 = currentWidth + 120;
@@ -91,7 +92,6 @@ public class ToolBarHudRenderer
                 }
                 Map<String, Integer> leftEnchantments = new HashMap<>();
                 Map<String, Integer> rightEnchantments = new HashMap<>();
-                Minecraft client = Minecraft.getInstance();
                 List<ItemStack> itemStacks = new ArrayList<>();
                 itemStacks.add(getCameraPlayer().getItemInHand(InteractionHand.MAIN_HAND));
                 itemStacks.add(getCameraPlayer().getItemInHand(InteractionHand.OFF_HAND));
@@ -240,7 +240,7 @@ public class ToolBarHudRenderer
                             default -> level = "";
                         }
                         context.blit(RenderPipelines.GUI_TEXTURED, icon, k2 + 8 + index *10-finalLength, client.getWindow().getGuiScaledHeight()-91, 0,0,13,13,13,13);
-                        drawScaledText(context,Minecraft.getInstance().font, Component.nullToEmpty(level), k2 + 8 + index * 10+9-finalLength, client.getWindow().getGuiScaledHeight()-83,0.9f,Mitayclient.getConfig().isDarkShown() ? Resource.WHITE : 0,false);
+                        drawScaledText(context,client.font, Component.nullToEmpty(level), k2 + 8 + index * 10+9-finalLength, client.getWindow().getGuiScaledHeight()-83,0.9f,Mitayclient.getConfig().isDarkShown() ? Resource.WHITE : 0,false);
                         index += 2;
                     }
 
@@ -286,7 +286,7 @@ public class ToolBarHudRenderer
                     //物品
                     drawScaledItem(context,rightHandItem, k1 + 2-finalLength, client.getWindow().getGuiScaledHeight()-59,1.5f);
                     //物品名
-                    context.text(Minecraft.getInstance().font, rightHandItem.getHoverName().getString(), k1+34-finalLength, client.getWindow().getGuiScaledHeight()-57, playerRightToolNameColor, true);
+                    context.text(client.font, rightHandItem.getHoverName().getString(), k1+34-finalLength, client.getWindow().getGuiScaledHeight()-57, playerRightToolNameColor, true);
                     //耐久
                     context.text(client.font, rightHandItem.getMaxDamage() - rightHandItem.getDamageValue() + "/" + rightHandItem.getMaxDamage() , k1+34-finalLength, client.getWindow().getGuiScaledHeight()-47, playerRightToolDamageColor, true);
 
@@ -305,7 +305,7 @@ public class ToolBarHudRenderer
                             default -> level = "";
                         }
                         context.blit(RenderPipelines.GUI_TEXTURED, icon, k1 + 8 + index *10-finalLength, client.getWindow().getGuiScaledHeight()-36, 0,0,13,13,13,13);
-                        drawScaledText(context,Minecraft.getInstance().font, Component.nullToEmpty(level), k1 + 8 + index * 10+9-finalLength, client.getWindow().getGuiScaledHeight()-28,0.9f, Resource.WHITE,true);
+                        drawScaledText(context,client.font, Component.nullToEmpty(level), k1 + 8 + index * 10+9-finalLength, client.getWindow().getGuiScaledHeight()-28,0.9f, Resource.WHITE,true);
                         index += 2;
                     }
                 }else k1 = client.getWindow().getGuiScaledWidth();
