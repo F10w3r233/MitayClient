@@ -8,17 +8,15 @@ import com.flower.mitayclient.util.ModIdentifier;
 import com.flower.mitayclient.util.Resource;
 import java.util.Objects;
 
-import com.flower.mitayclient.util.Skin.SkinCacheHelper;
+import com.flower.mitayclient.util.renderer.Skin.SkinCacheHelper;
 import net.minecraft.client.Minecraft;
 import net.minecraft.client.gui.GuiGraphicsExtractor;
-import net.minecraft.client.gui.components.PlayerFaceExtractor;
 import net.minecraft.client.multiplayer.ClientPacketListener;
 import net.minecraft.client.multiplayer.PlayerInfo;
 import net.minecraft.client.renderer.RenderPipelines;
 import net.minecraft.network.chat.Component;
 import net.minecraft.resources.Identifier;
 import net.minecraft.util.ARGB;
-import net.minecraft.util.CommonColors;
 
 import static com.flower.mitayclient.util.Resource.getCameraPlayer;
 import static com.flower.mitayclient.util.Resource.getStringWidth;

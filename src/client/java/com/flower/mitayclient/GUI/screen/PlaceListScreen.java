@@ -34,6 +34,7 @@ import java.util.*;
 
 import static com.flower.mitayclient.GUI.buttons.Accessibility.AccessibilityPressableWidget.TICK;
 import static com.flower.mitayclient.util.MitayUtils.*;
+import static com.flower.mitayclient.util.renderer.ScaledElementRenderer.drawScaledText;
 
 
 //做好空值处理
@@ -184,7 +185,7 @@ public class PlaceListScreen extends SideBarScreen
     public void renderAddLocation(GuiGraphicsExtractor context)
     {
         context.blit(RenderPipelines.GUI_TEXTURED, Resource.PLACE_icon, panelX+130, panelY + 10, 0,0,24,24,24,24);
-        ToolBarHudRenderer.drawScaledText(context, font, Component.literal("添加一个地点..."), panelX+135 + 28, panelY+14, 2.0f, MitayUtils.getFontColor(), false);
+        drawScaledText(context, font, Component.literal("添加一个地点..."), panelX+135 + 28, panelY+14, 2.0f, MitayUtils.getFontColor(), false);
     }
 
 

@@ -1,14 +1,11 @@
 package com.flower.mitayclient.GUI.HUD;
 
 import com.flower.Mitayclient;
-import com.flower.mitayclient.util.Data.PlayerDataHandler;
 import com.flower.mitayclient.util.Resource;
 import it.unimi.dsi.fastutil.objects.Object2IntMap;
-import org.joml.Matrix3x2fStack;
 
 import java.util.*;
 import net.minecraft.client.Minecraft;
-import net.minecraft.client.gui.Font;
 import net.minecraft.client.gui.GuiGraphicsExtractor;
 import net.minecraft.client.renderer.RenderPipelines;
 import net.minecraft.core.Holder;
@@ -17,6 +14,9 @@ import net.minecraft.resources.Identifier;
 import net.minecraft.world.InteractionHand;
 import net.minecraft.world.entity.player.Player;
 import net.minecraft.world.item.ItemStack;
+
+import static com.flower.mitayclient.util.renderer.ScaledElementRenderer.drawScaledItem;
+import static com.flower.mitayclient.util.renderer.ScaledElementRenderer.drawScaledText;
 
 
 public class ToolBarHudRenderer
@@ -311,27 +311,5 @@ public class ToolBarHudRenderer
                 }else k1 = client.getWindow().getGuiScaledWidth();
             }
         }
-    }
-
-    public static void drawScaledText(GuiGraphicsExtractor context, Font font,
-                                      Component text, int x, int y, float scale,
-                                      int color, boolean shadow)
-    {
-        Matrix3x2fStack matrices = context.pose();
-        matrices.pushMatrix();
-        matrices.translate(x, y);
-        matrices.scale(scale, scale);
-        context.text(font, text, 0, 0, color, shadow);
-        matrices.popMatrix();
-    }
-
-    public static void drawScaledItem(GuiGraphicsExtractor context, ItemStack item, int x, int y, float scale)
-    {
-        Matrix3x2fStack matrices = context.pose();
-        matrices.pushMatrix();
-        matrices.translate(x, y);
-        matrices.scale(scale, scale);
-        context.item(item,0,0);
-        matrices.popMatrix();
     }
 }

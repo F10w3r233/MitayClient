@@ -23,9 +23,9 @@ import org.spongepowered.asm.mixin.injection.callback.CallbackInfo;
 import java.util.*;
 
 import static com.flower.mitayclient.util.ChatHistory.ChatKeywordDetector.*;
-import static com.flower.mitayclient.util.NameFinder.findPureNames;
-import static com.flower.mitayclient.util.NameFinder.getHeadX;
-import static com.flower.mitayclient.util.Skin.SkinCacheHelper.renderHead;
+import static com.flower.mitayclient.util.ChatHistory.NameFinder.findPureNames;
+import static com.flower.mitayclient.util.ChatHistory.NameFinder.getHeadX;
+import static com.flower.mitayclient.util.renderer.Skin.SkinCacheHelper.renderHead;
 
 @Mixin(ChatComponent.class)
 public class ChatHudMixin

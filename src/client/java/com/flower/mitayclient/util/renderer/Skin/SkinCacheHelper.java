@@ -1,12 +1,9 @@
-package com.flower.mitayclient.util.Skin;
+package com.flower.mitayclient.util.renderer.Skin;
 
 
-import com.mojang.authlib.GameProfile;
-import com.mojang.blaze3d.vertex.PoseStack;
 import net.minecraft.client.Minecraft;
 import net.minecraft.client.gui.GuiGraphicsExtractor;
 import net.minecraft.client.gui.components.PlayerFaceExtractor;
-import net.minecraft.client.multiplayer.PlayerInfo;
 import net.minecraft.client.renderer.PlayerSkinRenderCache;
 import net.minecraft.client.renderer.RenderPipelines;
 import net.minecraft.resources.Identifier;
@@ -14,13 +11,9 @@ import net.minecraft.world.entity.player.PlayerSkin;
 import net.minecraft.world.item.component.ResolvableProfile;
 import org.joml.Matrix3x2fStack;
 
-import java.util.Map;
 import java.util.Optional;
-import java.util.Set;
 import java.util.UUID;
 import java.util.concurrent.CompletableFuture;
-import java.util.concurrent.ConcurrentHashMap;
-import java.util.function.Supplier;
 
 import static net.minecraft.client.resources.DefaultPlayerSkin.get;
 import static net.minecraft.client.resources.DefaultPlayerSkin.getDefaultSkin;

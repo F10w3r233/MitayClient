@@ -1,4 +1,4 @@
-package com.flower.mitayclient.util;
+package com.flower.mitayclient.util.ChatHistory;
 
 import com.flower.mitayclient.GUI.screen.ProfileUtil.PlayerProfile;
 import com.flower.mitayclient.GUI.screen.ProfileUtil.title.RequestTitlesPayload;

@@ -16,6 +16,8 @@ import org.spongepowered.asm.mixin.injection.At;
 import org.spongepowered.asm.mixin.injection.Inject;
 import org.spongepowered.asm.mixin.injection.callback.CallbackInfo;
 
+import static com.flower.mitayclient.util.renderer.ScaledElementRenderer.drawScaledText;
+
 @Mixin(ConnectScreen.class)
 public class ConnectScreenMixin extends Screen
 {
@@ -30,6 +32,6 @@ public class ConnectScreenMixin extends Screen
     public void extractRenderState(final GuiGraphicsExtractor context, final int mouseX, final int mouseY, final float a, CallbackInfo ci)
     {
         context.blit(RenderPipelines.GUI_TEXTURED, BACKGROUND_TEXTURES, 0,0,0,0,this.width,this.height,this.width,this.height);
-        ToolBarHudRenderer.drawScaledText(context, Minecraft.getInstance().font, Component.literal("正在连接到 Mitay..."), (int)(context.guiWidth()- Resource.getStringWidth("正在连接到 Mitay...")*1.5)/2, context.guiHeight()/2-5, 1.5f, CommonColors.WHITE, true);
+        drawScaledText(context, Minecraft.getInstance().font, Component.literal("正在连接到 Mitay..."), (int)(context.guiWidth()- Resource.getStringWidth("正在连接到 Mitay...")*1.5)/2, context.guiHeight()/2-5, 1.5f, CommonColors.WHITE, true);
     }
 }

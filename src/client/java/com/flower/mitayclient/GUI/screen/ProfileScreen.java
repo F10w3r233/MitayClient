@@ -6,7 +6,6 @@ import com.flower.mitayclient.GUI.buttons.Badge.BadgeButton;
 import com.flower.mitayclient.GUI.buttons.PlaceList.Large.PlaceListButton;
 import com.flower.mitayclient.GUI.screen.BadgeUtil.BadgeCache;
 import com.flower.mitayclient.GUI.screen.BadgeUtil.networking.BadgesPayload;
-import com.flower.mitayclient.GUI.screen.BadgeUtil.networking.RequestBadgesPayload;
 import com.flower.mitayclient.GUI.screen.ProfileUtil.LeaderBoard.RequestLeaderboardPayload;
 import com.flower.mitayclient.GUI.screen.ProfileUtil.PlayerProfile;
 import com.flower.mitayclient.GUI.screen.ProfileUtil.RequestGameTimePayload;
@@ -22,8 +21,6 @@ import net.minecraft.client.multiplayer.PlayerInfo;
 import net.minecraft.client.renderer.RenderPipelines;
 import net.minecraft.network.chat.Component;
 import net.minecraft.resources.Identifier;
-import net.minecraft.util.CommonColors;
-import net.minecraft.world.entity.player.PlayerSkin;
 import net.minecraft.world.item.Items;
 
 import java.util.*;
@@ -35,7 +32,8 @@ import static com.flower.mitayclient.util.MitayUtils.getFontColor;
 import static com.flower.mitayclient.util.MitayUtils.getTitleColor;
 import static com.flower.mitayclient.util.Resource.getCameraPlayer;
 import static com.flower.mitayclient.util.Resource.getStringWidth;
-import static com.flower.mitayclient.util.Skin.SkinCacheHelper.*;
+import static com.flower.mitayclient.util.renderer.ScaledElementRenderer.drawScaledText;
+import static com.flower.mitayclient.util.renderer.Skin.SkinCacheHelper.*;
 
 public class ProfileScreen extends SideBarScreen
 {
@@ -186,7 +184,7 @@ public class ProfileScreen extends SideBarScreen
 
         renderHeadWith3D(context, name, panelX + 130, panelY + 13, 24, 0.5f);
 //        graphics.blit(RenderPipelines.GUI_TEXTURED, Resource.PLACE_icon, panelX+130, panelY + 10, 0,0,24,24,24,24);
-        ToolBarHudRenderer.drawScaledText(context, font, containsDisplayName ? splitComponent(displayName, "] ")[1] : Component.literal(name), panelX+135 + 28, panelY+20, 1.5f, getFontColor(), false);
+        drawScaledText(context, font, containsDisplayName ? splitComponent(displayName, "] ")[1] : Component.literal(name), panelX+135 + 28, panelY+20, 1.5f, getFontColor(), false);
         context.item(Items.CLOCK.getDefaultInstance(), panelX+130, panelY + 13 + 24 + 10);
         context.text(font, "游戏时长：" + time + " " + "小时", panelX + 130 + 20, panelY + 13 + 24 + 14, getFontColor(), false);
 

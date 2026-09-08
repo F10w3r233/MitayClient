@@ -28,6 +28,8 @@ import org.lwjgl.glfw.GLFW;
 import java.awt.event.MouseEvent;
 import java.util.*;
 
+import static com.flower.mitayclient.util.renderer.ScaledElementRenderer.drawScaledText;
+
 public class TeleportScreen extends SideBarScreen
 {
     private static final Identifier TICK = ModIdentifier.get("textures/gui/widget/accessibility_button/tick.png");
@@ -167,7 +169,7 @@ public class TeleportScreen extends SideBarScreen
     public void renderCoordinateDesc(GuiGraphicsExtractor graphics)
     {
         graphics.blit(RenderPipelines.GUI_TEXTURED, Resource.PLACE_icon, panelX+130, panelY + 10, 0,0,24,24,24,24);
-        ToolBarHudRenderer.drawScaledText(graphics, font, Component.literal("传送到..."), panelX+135 + 28, panelY+14, 2.0f, MitayUtils.getFontColor(), false);
+        drawScaledText(graphics, font, Component.literal("传送到..."), panelX+135 + 28, panelY+14, 2.0f, MitayUtils.getFontColor(), false);
     }
 
     @Override

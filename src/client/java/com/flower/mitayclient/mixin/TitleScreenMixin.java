@@ -48,7 +48,8 @@ import net.minecraft.resources.Identifier;
 import net.minecraft.server.network.EventLoopGroupHolder;
 import net.minecraft.util.CommonColors;
 
-import static com.flower.mitayclient.GUI.HUD.ToolBarHudRenderer.drawScaledText;
+import static com.flower.mitayclient.util.renderer.ScaledElementRenderer.drawScaledText;
+
 
 @Mixin(TitleScreen.class)
 public class TitleScreenMixin extends Screen
@@ -56,7 +57,7 @@ public class TitleScreenMixin extends Screen
     @Unique
     boolean isReleaseVersion = true;
     @Unique
-    String version = "4.6.3.1";
+    String version = "4.6.3.2";
 //    static String ip = "g.a1.ocent.net:10130";
     @Unique
     final String IP = isReleaseVersion ? "g.a1.ocent.net:10130" : "127.0.0.1";

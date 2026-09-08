@@ -2,10 +2,9 @@ package com.flower.mitayclient.util.ChatHistory;
 
 import com.flower.mitayclient.GUI.screen.ChatHistoryScreen;
 import com.flower.mitayclient.GUI.screen.ProfileUtil.PlayerProfile;
-import com.flower.mitayclient.util.MitayUtils;
 import com.flower.mitayclient.util.ModIdentifier;
 import com.flower.mitayclient.util.Resource;
-import java.io.IOException;
+
 import java.util.*;
 
 import net.minecraft.client.Minecraft;
@@ -14,14 +13,13 @@ import net.minecraft.client.renderer.RenderPipelines;
 import net.minecraft.network.chat.Component;
 import net.minecraft.resources.Identifier;
 import net.minecraft.util.ARGB;
-import net.minecraft.util.CommonColors;
 
 import static com.flower.mitayclient.util.ChatHistory.ChatKeywordDetector.*;
 import static com.flower.mitayclient.util.ChatHistory.TextSerializer.removeTrailingText;
 import static com.flower.mitayclient.util.MitayUtils.getFontColor;
 import static com.flower.mitayclient.util.Resource.getStringWidth;
-import static com.flower.mitayclient.util.Skin.SkinCacheHelper.renderHead;
-import static com.flower.mitayclient.util.Skin.SkinCacheHelper.renderHeadWith3D;
+import static com.flower.mitayclient.util.renderer.Skin.SkinCacheHelper.renderHead;
+import static com.flower.mitayclient.util.renderer.Skin.SkinCacheHelper.renderHeadWith3D;
 
 enum MessageType
 {

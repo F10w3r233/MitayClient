@@ -1,20 +1,17 @@
 package com.flower;
 
 import com.flower.mitayclient.GUI.HUD.*;
-import com.flower.mitayclient.GUI.screen.ProfileUtil.title.RequestTitlesPayload;
 import com.flower.mitayclient.event.KeyInputHandler;
 import com.flower.mitayclient.util.ChatHistory.ChatRenderer;
 import com.flower.mitayclient.util.Data.DisplayConfig;
 import com.flower.mitayclient.util.ChatHistory.TextSerializer;
 import com.flower.mitayclient.util.ModIdentifier;
-import com.flower.mitayclient.util.Skin.SkinCacheHelper;
-import com.mojang.authlib.GameProfile;
+import com.flower.mitayclient.util.renderer.Skin.SkinCacheHelper;
 import net.fabricmc.api.ModInitializer;
 
 import net.fabricmc.fabric.api.client.message.v1.ClientReceiveMessageEvents;
 
 import net.fabricmc.fabric.api.client.networking.v1.ClientPlayConnectionEvents;
-import net.fabricmc.fabric.api.client.networking.v1.ClientPlayNetworking;
 import net.fabricmc.fabric.api.client.rendering.v1.hud.HudElementRegistry;
 import net.fabricmc.fabric.api.client.rendering.v1.hud.VanillaHudElements;
 import net.minecraft.client.DeltaTracker;
@@ -22,8 +19,6 @@ import net.minecraft.client.Minecraft;
 import net.minecraft.client.gui.GuiGraphicsExtractor;
 import net.minecraft.resources.Identifier;
 import net.minecraft.world.item.component.ResolvableProfile;
-
-import java.util.UUID;
 
 
 /**

@@ -1,11 +1,9 @@
 package com.flower.mitayclient.GUI.buttons.PlaceList.Large;
 
 import com.flower.Mitayclient;
-import com.flower.mitayclient.GUI.HUD.ToolBarHudRenderer;
 import com.flower.mitayclient.GUI.screen.ProfileUtil.PlayerProfile;
-import com.flower.mitayclient.util.MitayUtils;
 import com.flower.mitayclient.util.ModIdentifier;
-import com.flower.mitayclient.util.Skin.SkinCacheHelper;
+import com.flower.mitayclient.util.renderer.Skin.SkinCacheHelper;
 import net.fabricmc.api.EnvType;
 import net.fabricmc.api.Environment;
 import net.minecraft.client.Minecraft;
@@ -15,22 +13,13 @@ import net.minecraft.client.gui.components.PlayerFaceExtractor;
 import net.minecraft.client.gui.components.Tooltip;
 import net.minecraft.client.input.MouseButtonEvent;
 import net.minecraft.client.renderer.RenderPipelines;
-import net.minecraft.core.Holder;
-import net.minecraft.core.registries.BuiltInRegistries;
 import net.minecraft.network.chat.Component;
-import net.minecraft.network.chat.MutableComponent;
-import net.minecraft.network.chat.contents.TranslatableContents;
 import net.minecraft.resources.Identifier;
 import net.minecraft.util.CommonColors;
 import net.minecraft.world.entity.player.PlayerSkin;
-import net.minecraft.world.item.Item;
-import org.jetbrains.annotations.Nullable;
 
 import java.util.List;
-import java.util.Optional;
-import java.util.concurrent.atomic.AtomicInteger;
 
-import static com.flower.mitayclient.GUI.HUD.ToolBarHudRenderer.drawScaledItem;
 import static com.flower.mitayclient.util.MitayUtils.getWorldIcon;
 import static com.flower.mitayclient.util.Resource.*;
 
