@@ -101,7 +101,7 @@ public class Mitayclient implements ModInitializer
 //						1.0f
 //				);
 
-				System.out.println(Minecraft.getInstance().getConnection().getConnection().getRemoteAddress().toString());
+//				System.out.println(Minecraft.getInstance().getConnection().getConnection().getRemoteAddress().toString());
 				if(Minecraft.getInstance().getConnection().getConnection().getRemoteAddress().toString().equals("g.a1.ocent.net/203.135.104.11:10130"))
 				{
 					if(ChatRenderer.getType(message) != null)

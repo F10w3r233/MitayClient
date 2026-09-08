@@ -61,6 +61,7 @@ public class PlaceListScreen extends SideBarScreen
     SideType netherSide;
     SideType endSide;
     SideType creativeSide;
+    SideType findItemSide;
     SideType sharedPlaceSide;
 
 
@@ -130,6 +131,7 @@ public class PlaceListScreen extends SideBarScreen
         netherSide = SideType.withPlaceButtons(Resource.NETHER_icon, "地狱", netherButtons);
         endSide = SideType.withPlaceButtons(Resource.END_icon, "末地", endButtons);
         creativeSide = SideType.withPlaceButtons(Resource.CREATIVE_WORLD_icon, "创造世界", creativeButtons);
+//        findItemSide = SideType.withPlaceButtons(FIND_ITEM, "按物品查找", findItemButtons);
         sharedPlaceSide = SideType.withPlaceButtons(SHARED_PLACE, "玩家分享地点", sharedPlaceButtons);
 
         sideTypeMap.put("主世界", overworldSide);
@@ -212,6 +214,7 @@ public class PlaceListScreen extends SideBarScreen
         if (currentSideType.typeName.equals("玩家分享地点"))
         {
             clearAllWidgets();
+            addButton.setPosition(panelX + 318, panelY + 230);
             super.addRenderableWidget(addButton);
             sharedPlaceButtons.clear();
             for (Map.Entry<Integer, PlacesPayload.PlaceInfo> entry : PlaceCache.getPlaces().entrySet())
