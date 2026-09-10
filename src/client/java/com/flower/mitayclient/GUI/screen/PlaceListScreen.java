@@ -31,6 +31,7 @@ import org.jetbrains.annotations.Nullable;
 import org.lwjgl.glfw.GLFW;
 
 import java.util.*;
+import java.util.stream.Collectors;
 
 import static com.flower.mitayclient.GUI.buttons.Accessibility.AccessibilityPressableWidget.TICK;
 import static com.flower.mitayclient.util.MitayUtils.*;
@@ -41,6 +42,9 @@ import static com.flower.mitayclient.util.renderer.ScaledElementRenderer.drawSca
 
 public class PlaceListScreen extends SideBarScreen
 {
+    Identifier FIND_ITEM = ModIdentifier.get("textures/gui/screen/place_list/find_by_item.png");
+
+
     @Override
     public boolean preeditUpdated(@Nullable PreeditEvent event) {
         // 先让 scrollArea 处理（它可能转发给子控件）
@@ -70,58 +74,91 @@ public class PlaceListScreen extends SideBarScreen
     Map<String, List<PlaceListButton>> subMenuButtonsMap = new LinkedHashMap<>();
 
     //SubMenuButtons
-    List<String> mob_farm_outputs = List.of("rotten_flesh", "bone", "arrow", "gunpowder", "string", "slime_ball", "redstone", "spider_eye", "sugar", "stick", "glass_bottle", "glowstone_dust");
+    Map<String, List<String>> outputs = new LinkedHashMap<>();
+
+    //在map中放置所有output
+    {
+        List<String> mob_farm = List.of("rotten_flesh", "bone", "arrow", "gunpowder", "string", "slime_ball", "redstone", "spider_eye", "sugar", "stick", "glass_bottle", "glowstone_dust");
+        List<String> pigman_farm = List.of("#exp_orb","gold_nugget", "gold_ingot");
+        List<String> ghast_farm = List.of("ghast_tear", "gunpowder");
+        List<String> guardian_farm = List.of("prismarine_shard", "prismarine_crystals", "cod", "ink_sac");
+        List<String> iron_farm = List.of("iron_ingot", "poppy");
+        List<String> stone_farm = List.of("cobblestone");
+        List<String> wither_skull_farm = List.of("#exp_orb", "wither_skeleton_skull", "coal");
+        List<String> enderman_farm = List.of("#exp_orb", "ender_pearl");
+
+
+
+        outputs.put("mob_farm", mob_farm);
+        outputs.put("pigman_farm", pigman_farm);
+        outputs.put("ghast_farm", ghast_farm);
+        outputs.put("guardian_farm", guardian_farm);
+        outputs.put("iron_farm", iron_farm);
+        outputs.put("stone_farm", stone_farm);
+        outputs.put("wither_skull_farm", wither_skull_farm);
+        outputs.put("enderman_farm", enderman_farm);
+    }
+
+
     List<PlaceListButton> mob_tower_subButtons = Arrays.asList(
-            createContentButton(Resource.RESOURCE_text, "mob_resource", "overworld_resource", mob_farm_outputs,"tpplace mob_resource"),
+            createContentButton(Resource.RESOURCE_text, "mob_resource", "overworld_resource",null,"tpplace mob_resource"),
             createContentButton(Resource.AFK_text, "mob_afk", "overworld_afk_bot01",null,"tpplace mob_afk"),
             createContentButton(Resource.BACK_text, "", () -> super.switchContent(overworldSide))
     );
     List<PlaceListButton> pig_man_subButtons = Arrays.asList(
-            createContentButton(Resource.RESOURCE_text, "mob_resource", "", List.of("gold_nugget", "gold_ingot", "gold_block"), "tpplace pigman_resource"),
+            createContentButton(Resource.RESOURCE_text, "mob_resource", "", outputs.get("pigman_farm"), "tpplace pigman_resource"),
             createContentButton(Resource.AFK_text, "mob_afk", "tpplace pigman_afk"),
             createContentButton(Resource.BACK_text, "back", () -> super.switchContent(netherSide))
     );
 
     List<PlaceListButton> ghast_farm_subButtons = Arrays.asList(
-            createContentButton(Resource.RESOURCE_text, "mob_resource", "overworld_resource", List.of("ghast_tear", "gunpowder"), "tpplace ghast_farm_resource"),
+            createContentButton(Resource.RESOURCE_text, "mob_resource", "overworld_resource", outputs.get("ghast_farm"), "tpplace ghast_farm_resource"),
             createContentButton(Resource.AFK_text, "mob_afk", "nether_afk_bot03",null,"tpplace ghast_farm_afk"),
             createContentButton(Resource.BACK_text, "back", () -> super.switchContent(netherSide))
     );
 
     List<PlaceListButton> guardian_subButtons = Arrays.asList(
-            createContentButton(Resource.RESOURCE_text,  "mob_resource", "nether_resource", List.of("prismarine_shard", "prismarine_crystals", "cod", "ink_sac"), "tpplace guardian_resource"),
+            createContentButton(Resource.RESOURCE_text,  "mob_resource", "nether_resource", outputs.get("guardian_farm"), "tpplace guardian_resource"),
             createContentButton(Resource.AFK_text, "mob_afk", "overworld_afk_bot02",null,"tpplace guardian_afk"),
             createContentButton(Resource.BACK_text, "back", () -> super.switchContent(overworldSide))
     );
     //SubMenuType
 
-
+    List<PlaceListButton> allDimensionPlaceButtons = new ArrayList<>();
     //ContentButtons
     List<PlaceListButton> overworldButtons = Arrays.asList(
 //            createContentButton(Resource.EXCHANGE_text, "exchange", "tpplace trade"),
             createContentButton(Resource.TOWN_text, "home", "tpplace base"),
-            createContentButton(Resource.MOB_TOWER_text, "mob_main", () -> openSubMenu(mob_tower_subButtons)),
-            createContentButton(Resource.IRON_text, "iron", "", List.of("iron_ingot", "poppy"), "tpplace iron"),
+            createContentButton(Resource.MOB_TOWER_text, "mob_farm", "", outputs.get("mob_farm"), () -> openSubMenu(mob_tower_subButtons)),
+            createContentButton(Resource.IRON_text, "iron_farm", "", outputs.get("iron_farm"), "tpplace iron"),
             createContentButton(Resource.FURNACE_text, "furnace", "tpplace furnace"),
-            createContentButton(Resource.STONE_text, "stone", "", List.of("cobblestone"),"tpplace stone"),
-            createContentButton(Resource.GUARDIAN_text, "guardian", "multiDimension",() -> openSubMenu(guardian_subButtons))
+            createContentButton(Resource.STONE_text, "stone_farm", "", outputs.get("stone_farm"),"tpplace stone"),
+            createContentButton(Resource.GUARDIAN_text, "guardian_farm", "multiDimension",() -> openSubMenu(guardian_subButtons))
     );
 
     List<PlaceListButton> netherButtons = Arrays.asList(
-            createContentButton(Resource.PIG_MAN_text, "pig_man", () -> openSubMenu(pig_man_subButtons)),
-            createContentButton(Resource.WITHER_SKULL_text, "wither_skull", "",List.of("wither_skeleton_skull", "coal"),"tpplace wither_skull_farm"),
+            createContentButton(Resource.PIG_MAN_text, "pigman_farm", () -> openSubMenu(pig_man_subButtons)),
+            createContentButton(Resource.WITHER_SKULL_text, "wither_skull_farm", "", outputs.get("wither_skull_farm"),"tpplace wither_skull_farm"),
             createContentButton(Resource.GHAST_FARM_text, "ghast_farm", "multiDimension", () -> openSubMenu(ghast_farm_subButtons))
     );
     List<PlaceListButton> endButtons = Arrays.asList(
             createContentButton(Resource.PORTAL_text, "end_portal", () -> Minecraft.getInstance().setScreen(null)),
             createContentButton(Resource.MAINLAND_text, "end_mainland", "tpplace end_mainland"),
-            createContentButton(Resource.ENDER_MAN_text, "ender_man_farm", "", List.of("ender_pearl"),"tpplace enderman_farm")
+            createContentButton(Resource.ENDER_MAN_text, "enderman_farm", "", outputs.get("ender_man_farm"),"tpplace enderman_farm")
     );
     List<PlaceListButton> creativeButtons = Arrays.asList(
             createContentButton(Resource.CREATIVE, "creative", "tpplace creativeWorld")
     );
 
+    {
+        allDimensionPlaceButtons.addAll(overworldButtons);
+        allDimensionPlaceButtons.addAll(netherButtons);
+        allDimensionPlaceButtons.addAll(endButtons);
+        allDimensionPlaceButtons.addAll(creativeButtons);
+    }
+
     List<PlaceListButton> sharedPlaceButtons = new ArrayList<>();
+    List<PlaceListButton> findItemButtons = new ArrayList<>();
 
 
     //初始化this.sideTypeMap
@@ -132,7 +169,7 @@ public class PlaceListScreen extends SideBarScreen
         netherSide = SideType.withPlaceButtons(Resource.NETHER_icon, "地狱", netherButtons);
         endSide = SideType.withPlaceButtons(Resource.END_icon, "末地", endButtons);
         creativeSide = SideType.withPlaceButtons(Resource.CREATIVE_WORLD_icon, "创造世界", creativeButtons);
-//        findItemSide = SideType.withPlaceButtons(FIND_ITEM, "按物品查找", findItemButtons);
+        findItemSide = SideType.withPlaceButtons(FIND_ITEM, "按物品查找", findItemButtons);
         sharedPlaceSide = SideType.withPlaceButtons(SHARED_PLACE, "玩家分享地点", sharedPlaceButtons);
 
         sideTypeMap.put("主世界", overworldSide);
@@ -140,6 +177,7 @@ public class PlaceListScreen extends SideBarScreen
         sideTypeMap.put("末地", endSide);
         sideTypeMap.put("创造世界", creativeSide);
         sideTypeMap.put("玩家分享地点", sharedPlaceSide);
+        sideTypeMap.put("按物品查找", findItemSide);
 
         subMenuButtonsMap.put("沼泽刷怪塔-二级菜单", mob_tower_subButtons);
         subMenuButtonsMap.put("猪人塔-二级菜单", pig_man_subButtons);
@@ -233,16 +271,66 @@ public class PlaceListScreen extends SideBarScreen
 
 //                System.out.println("地点 " + id + ": " + info.desc() + " (" + info.world() + ")");
             }
-
-
-
             super.showContent(buttons, type);
+        }else if(currentSideType.typeName.equals("按物品查找"))
+        {
+            findItemButtons.clear();
+            clearAllWidgets();
+            //将output的Map的所有Item的String提取
+            List<String> allItems = outputs.values().stream()
+                    .flatMap(List::stream)
+                    .distinct()
+                    .collect(Collectors.toList());
 
-        }else
+
+            for (String item : allItems)
+            {
+                //待处理经验   #exp_orb
+                if (item.startsWith("#")) continue; //不处理图片，但后续要处理经验，待区分图片与#经验的标识符
+                List<String> searchResult = new ArrayList<>();
+                List<PlaceListButton> resultButtonList = new ArrayList<>();
+                //搜索物品所存在地点
+                Set<Map.Entry<String, List<String>>> entrySet = outputs.entrySet();
+                for (Map.Entry<String, List<String>> entry : entrySet)
+                {
+                    String placeName = entry.getKey();
+                    List<String> placeOutputs = entry.getValue();
+                    for (String output : placeOutputs)
+                    {
+                        if (output.equals(item))
+                        {
+                            searchResult.add(placeName);
+                        }
+                    }
+
+
+                    //搜索结果
+                    for (PlaceListButton dimensionPlaceButton : allDimensionPlaceButtons)
+                    {
+                        String iconName = dimensionPlaceButton.getIconName();
+                        for (String resultPlaces : searchResult)
+                        {
+                            if (iconName.equals(resultPlaces)) resultButtonList.add(dimensionPlaceButton);
+                        }
+                    }
+                }
+
+                findItemButtons.add(PlaceListButton.builder(Component.empty(), button -> {
+                            clearAllWidgets();
+                            showContent(resultButtonList, PlaceListButton.class);
+                        }).item(item)
+                        .size(210,30)
+                        .type("search_result")
+                        .build());
+            }
+            super.showContent(buttons, type);
+        } else
         {
             super.removeWidget(addButton);
             super.showContent(buttons, type);
         }
+
+
     }
 
     int x,y,z;

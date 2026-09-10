@@ -1,10 +1,12 @@
 package com.flower.mitayclient.mixin;
 
 
+import com.flower.mitayclient.util.ModIdentifier;
 import net.minecraft.ChatFormatting;
 import net.minecraft.client.gui.Font;
 import net.minecraft.client.gui.GuiGraphicsExtractor;
 import net.minecraft.client.gui.screens.inventory.tooltip.ClientTextTooltip;
+import net.minecraft.client.renderer.RenderPipelines;
 import net.minecraft.core.Holder;
 import net.minecraft.core.registries.BuiltInRegistries;
 import net.minecraft.network.chat.Component;
@@ -17,20 +19,20 @@ import net.minecraft.util.FormattedCharSequence;
 import net.minecraft.world.item.Item;
 import org.spongepowered.asm.mixin.Mixin;
 import org.spongepowered.asm.mixin.Shadow;
-import org.spongepowered.asm.mixin.Unique;
 import org.spongepowered.asm.mixin.injection.At;
 import org.spongepowered.asm.mixin.injection.Inject;
 import org.spongepowered.asm.mixin.injection.callback.CallbackInfo;
 
 import java.util.Optional;
-import java.util.concurrent.atomic.AtomicInteger;
 import java.util.concurrent.atomic.AtomicReference;
 
-import static com.flower.mitayclient.GUI.HUD.ToolBarHudRenderer.drawScaledItem;
+import static com.flower.mitayclient.util.renderer.ScaledElementRenderer.drawScaledItem;
 
 @Mixin(ClientTextTooltip.class)
 public class TooltipMixin
 {
+    Identifier EXP_ORB = ModIdentifier.get("textures/gui/widget/tooltip/exp_orb.png");
+
     @Shadow
     private final FormattedCharSequence text;
 
@@ -50,6 +52,7 @@ public class TooltipMixin
             int itemColor = CommonColors.WHITE;
 
             index++;
+            //物品
             if (line.contains("$"))
             {
 
@@ -60,6 +63,7 @@ public class TooltipMixin
                 String pureItemName = itemRegisterID.replace("minecraft:", "");//poppy
                 if(itemId != null)
                 {
+
                     Optional<Holder.Reference<Item>> optHolder = BuiltInRegistries.ITEM.get(itemId);
                     if (optHolder.isPresent())
                     {
@@ -70,9 +74,28 @@ public class TooltipMixin
                         drawScaledItem(graphics, item.getDefaultInstance(), x + 1, y + index - 2, 0.6f);
                     }
 
+                }else { //图片
+                    String iconId = line.replaceFirst("^§[0-9a-zA-Z]\\s*", "").replace("$#", "").trim();
+                    Identifier identifier = null;
+                    switch (iconId)
+                    {
+                        case "exp_orb" : identifier = EXP_ORB;  line = "   经验";
+                    }
+
+                    graphics.blit(RenderPipelines.GUI_TEXTURED, identifier, x + 2, y + index - 2, 0,0,8,8,8,8);
                 }
             }
-            System.out.println(itemColor);
+
+//            //图片等
+//            if (line.startsWith("#"))
+//            {
+//                String iconName = null;
+//                switch (iconName)
+//                {
+//
+//                }
+//            }
+//            System.out.println(itemColor);
             graphics.text(font, line, x, y, ARGB.color(1f, itemColor), true);
         }
     }

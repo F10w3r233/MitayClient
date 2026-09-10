@@ -13,15 +13,20 @@ import net.minecraft.client.gui.components.PlayerFaceExtractor;
 import net.minecraft.client.gui.components.Tooltip;
 import net.minecraft.client.input.MouseButtonEvent;
 import net.minecraft.client.renderer.RenderPipelines;
+import net.minecraft.core.Holder;
+import net.minecraft.core.registries.BuiltInRegistries;
 import net.minecraft.network.chat.Component;
 import net.minecraft.resources.Identifier;
 import net.minecraft.util.CommonColors;
 import net.minecraft.world.entity.player.PlayerSkin;
+import net.minecraft.world.item.Item;
 
 import java.util.List;
+import java.util.Optional;
 
 import static com.flower.mitayclient.util.MitayUtils.getWorldIcon;
 import static com.flower.mitayclient.util.Resource.*;
+import static com.flower.mitayclient.util.renderer.ScaledElementRenderer.drawScaledItem;
 
 
 @Environment(EnvType.CLIENT)
@@ -85,8 +90,9 @@ public abstract class PlaceListPressable extends AbstractWidget
     PlayerProfile profile;
     String desc;
     List<String> output;
+    String item;
 
-    public PlaceListPressable(int i, int j, int k, int l, Component text, String iconName, Identifier iconIdentifier, PlayerSkin skin, String type, PlayerProfile profile, String desc, List<String> output)
+    public PlaceListPressable(int i, int j, int k, int l, Component text, String iconName, Identifier iconIdentifier, PlayerSkin skin, String type, PlayerProfile profile, String desc, List<String> output, String item)
     {
         super(i, j, k, l, text);
         this.iconName = iconName;
@@ -96,6 +102,7 @@ public abstract class PlaceListPressable extends AbstractWidget
         this.profile = profile;
         this.desc = desc;
         this.output = output;
+        this.item = item;
     }
     public abstract void onPress();
 
@@ -110,17 +117,17 @@ public abstract class PlaceListPressable extends AbstractWidget
             case "exchange" -> EXCHANGE;
             case "home" -> HOME;
             case "creative" -> CREATIVE_WORLD;
-            case "mob_main" -> MOB_TOWER_MAIN;
+            case "mob_farm" -> MOB_TOWER_MAIN;
             case "mob_resource" -> MOB_TOWER_RESOURCE;
             case "mob_afk" -> MOB_TOWER_AFK;
             case "end_mainland" -> END_MAINLAND;
             case "end_portal" -> END_PORTAL;
-            case "iron" -> IRON_FARM;
+            case "iron_farm" -> IRON_FARM;
             case "sugar_cane" -> SUGAR_CANE;
-            case "pig_man" -> PIG_MAN;
-            case "wither_skull" -> WITHER_SKULL;
+            case "pigman_farm" -> PIG_MAN;
+            case "wither_skull_farm" -> WITHER_SKULL;
             case "guardian" -> GUARDIAN;
-            case "stone" -> STONE;
+            case "stone_farm" -> STONE;
             case "furnace" -> FURNACE;
             case "ghast_farm" -> GHAST_FARM;
             case "spawnpoint" -> SPAWNPOINT;
@@ -159,6 +166,8 @@ public abstract class PlaceListPressable extends AbstractWidget
         }else color = 0xFF0B242E;
 
 
+
+        // as well as "Mode"
         if(type != null)
         {
             if(type.startsWith("ranking"))
@@ -201,6 +210,31 @@ public abstract class PlaceListPressable extends AbstractWidget
 //                context.text(Minecraft.getInstance().font, uploader + " · " + coordinate, (width - getStringWidth(uploader + " · " + coordinate)) / 2 + getX(), getY() + 16, CommonColors.GRAY, false);
                 //不显示坐标
                 context.text(Minecraft.getInstance().font, uploader, (width - getStringWidth(uploader)) / 2 + getX(), getY() + 16, CommonColors.GRAY, false);
+            }else if (type.startsWith("search_result"))
+            {
+                if (item != null)
+                {
+                    int itemColor = -1;
+                    String itemRegisterID = "minecraft:" + item;
+                    Identifier itemId =
+                            Identifier.tryParse(itemRegisterID);
+                    String pureItemName = itemRegisterID.replace("minecraft:", "");//poppy
+                    if(itemId != null)
+                    {
+
+                        Optional<Holder.Reference<Item>> optHolder = BuiltInRegistries.ITEM.get(itemId);
+                        if (optHolder.isPresent())
+                        {
+                            Item item = optHolder.get().value();
+                            itemColor = item.getDefaultInstance().getRarity().color().getColor();
+                            Component itemName = Component.translatable(item.getDefaultInstance().getItemName().getString());//物品中文名
+                            drawScaledItem(context, item.getDefaultInstance(), this.getX()+10, this.getY()+6, 1f);
+                            context.text(Minecraft.getInstance().font, itemName, (width - getStringWidth(itemName)) / 2 + getX(), getY() + 10, CommonColors.BLACK, false);
+//                            drawScaledItem(context, item.getDefaultInstance(), x + 1, y - 2, 0.6f);
+                        }
+
+                    }
+                }
             }
         }else {
             if(skin != null)

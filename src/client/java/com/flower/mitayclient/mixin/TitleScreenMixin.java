@@ -10,10 +10,8 @@ import com.flower.mitayclient.util.ModIdentifier;
 import com.flower.mitayclient.util.Resource;
 import com.google.common.util.concurrent.ThreadFactoryBuilder;
 import com.mojang.blaze3d.pipeline.RenderTarget;
-import com.mojang.blaze3d.systems.RenderSystem;
 import com.mojang.logging.LogUtils;
 import net.minecraft.client.gui.components.Tooltip;
-import net.minecraft.client.renderer.GameRenderer;
 import org.lwjgl.glfw.GLFW;
 import org.spongepowered.asm.mixin.Mixin;
 import org.spongepowered.asm.mixin.Unique;
@@ -39,7 +37,6 @@ import net.minecraft.client.gui.screens.worldselection.SelectWorldScreen;
 import net.minecraft.client.input.KeyEvent;
 import net.minecraft.client.multiplayer.ServerData;
 import net.minecraft.client.multiplayer.ServerStatusPinger;
-import net.minecraft.client.multiplayer.TransferState;
 import net.minecraft.client.multiplayer.resolver.ServerAddress;
 import net.minecraft.client.renderer.RenderPipelines;
 import net.minecraft.network.chat.CommonComponents;
@@ -55,7 +52,7 @@ import static com.flower.mitayclient.util.renderer.ScaledElementRenderer.drawSca
 public class TitleScreenMixin extends Screen
 {
     @Unique
-    boolean isReleaseVersion = true;
+    boolean isReleaseVersion = false;
     @Unique
     String version = "4.6.3.2";
 //    static String ip = "g.a1.ocent.net:10130";

@@ -68,7 +68,15 @@ public class KeyInputHandler {
             ClientTickEvents.END_CLIENT_TICK.register(client -> {
                 keyActions.forEach((key, action) -> {
                     if (key.consumeClick()) {
-                        action.run();
+                        if (Minecraft.getInstance().getConnection().getConnection() != null)
+                        {
+                            String ip = Minecraft.getInstance().getConnection().getConnection().getRemoteAddress().toString();
+                            if (ip.equals("g.a1.ocent.net/203.135.104.11:10130") ||
+                                ip.equals("127.0.0.1/127.0.0.1:25565"))
+                            {
+                                action.run();
+                            }
+                        }
                     }
                 });
             });

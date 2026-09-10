@@ -9,7 +9,6 @@ import net.minecraft.resources.Identifier;
 import net.minecraft.world.entity.player.PlayerSkin;
 
 import java.util.List;
-import java.util.Map;
 
 
 @Environment(EnvType.CLIENT)
@@ -21,10 +20,15 @@ public class PlaceListButton extends PlaceListPressable
         return new Builder(message, onPress);
     }
 
-    protected PlaceListButton(int x, int y, int width, int height, Component message, PressAction onPress, String iconName, Identifier iconIdentifier, PlayerSkin skin, String type, PlayerProfile profile, String desc, List<String> output)
+    protected PlaceListButton(int x, int y, int width, int height, Component message, PressAction onPress, String iconName, Identifier iconIdentifier, PlayerSkin skin, String type, PlayerProfile profile, String desc, List<String> output, String item)
     {
-        super(x, y, width, height, message, iconName, iconIdentifier, skin, type, profile, desc, output);
+        super(x, y, width, height, message, iconName, iconIdentifier, skin, type, profile, desc, output, item);
         this.onPress = onPress;
+    }
+
+    public String getIconName()
+    {
+        return iconName;
     }
 
     @Override
@@ -53,6 +57,7 @@ public class PlaceListButton extends PlaceListPressable
         private PlayerProfile thisProfile;
         private String thisDesc;
         private List<String> thisOutput;
+        private String thisItem;
 
         public Builder(Component message, PressAction onPress) {
             this.message = message;
@@ -121,8 +126,13 @@ public class PlaceListButton extends PlaceListPressable
             return this;
         }
 
+        public Builder item(String item) {
+            thisItem = item;
+            return this;
+        }
+
         public PlaceListButton build() {
-            PlaceListButton buttonWidget = new PlaceListButton(this.x, this.y, this.width, this.height, this.message, this.onPress, thisIconName, thisIconIdentifier, thisSkin, thisType, thisProfile, thisDesc, thisOutput);
+            PlaceListButton buttonWidget = new PlaceListButton(this.x, this.y, this.width, this.height, this.message, this.onPress, thisIconName, thisIconIdentifier, thisSkin, thisType, thisProfile, thisDesc, thisOutput, thisItem);
             return buttonWidget;
         }
 

@@ -177,6 +177,15 @@
                     .dimensions(0, 0, 210, 30)
                     .build();
         }
+        public static PlaceListButton createContentButton(Component name, String icon, String desc, List<String> output, Runnable action)
+        {
+            return PlaceListButton.builder(name, button -> action.run())
+                    .icon(icon)
+                    .desc(desc)
+                    .output(output)
+                    .dimensions(0, 0, 210, 30)
+                    .build();
+        }
 
         public static SwitchButton createSettingsButton(Component name, boolean flag, Runnable action)
         {
