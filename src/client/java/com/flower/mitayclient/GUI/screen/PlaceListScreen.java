@@ -112,13 +112,13 @@ public class PlaceListScreen extends SideBarScreen
     );
 
     List<PlaceListButton> ghast_farm_subButtons = Arrays.asList(
-            createContentButton(Resource.RESOURCE_text, "mob_resource", "overworld_resource", outputs.get("ghast_farm"), "tpplace ghast_farm_resource"),
+            createContentButton(Resource.RESOURCE_text, "mob_resource", "overworld_resource", null, "tpplace ghast_farm_resource"),
             createContentButton(Resource.AFK_text, "mob_afk", "nether_afk_bot03",null,"tpplace ghast_farm_afk"),
             createContentButton(Resource.BACK_text, "back", () -> super.switchContent(netherSide))
     );
 
     List<PlaceListButton> guardian_subButtons = Arrays.asList(
-            createContentButton(Resource.RESOURCE_text,  "mob_resource", "nether_resource", outputs.get("guardian_farm"), "tpplace guardian_resource"),
+            createContentButton(Resource.RESOURCE_text,  "mob_resource", "nether_resource", null, "tpplace guardian_resource"),
             createContentButton(Resource.AFK_text, "mob_afk", "overworld_afk_bot02",null,"tpplace guardian_afk"),
             createContentButton(Resource.BACK_text, "back", () -> super.switchContent(overworldSide))
     );
@@ -133,13 +133,13 @@ public class PlaceListScreen extends SideBarScreen
             createContentButton(Resource.IRON_text, "iron_farm", "", outputs.get("iron_farm"), "tpplace iron"),
             createContentButton(Resource.FURNACE_text, "furnace", "tpplace furnace"),
             createContentButton(Resource.STONE_text, "stone_farm", "", outputs.get("stone_farm"),"tpplace stone"),
-            createContentButton(Resource.GUARDIAN_text, "guardian_farm", "multiDimension",() -> openSubMenu(guardian_subButtons))
+            createContentButton(Resource.GUARDIAN_text, "guardian_farm", "multiDimension", outputs.get("guardian_farm"), () -> openSubMenu(guardian_subButtons))
     );
 
     List<PlaceListButton> netherButtons = Arrays.asList(
             createContentButton(Resource.PIG_MAN_text, "pigman_farm", () -> openSubMenu(pig_man_subButtons)),
             createContentButton(Resource.WITHER_SKULL_text, "wither_skull_farm", "", outputs.get("wither_skull_farm"),"tpplace wither_skull_farm"),
-            createContentButton(Resource.GHAST_FARM_text, "ghast_farm", "multiDimension", () -> openSubMenu(ghast_farm_subButtons))
+            createContentButton(Resource.GHAST_FARM_text, "ghast_farm", "multiDimension", outputs.get("ghast_farm"), () -> openSubMenu(ghast_farm_subButtons))
     );
     List<PlaceListButton> endButtons = Arrays.asList(
             createContentButton(Resource.PORTAL_text, "end_portal", () -> Minecraft.getInstance().setScreen(null)),
@@ -303,22 +303,23 @@ public class PlaceListScreen extends SideBarScreen
                         }
                     }
 
-
-                    //搜索结果
-                    for (PlaceListButton dimensionPlaceButton : allDimensionPlaceButtons)
+                }
+                //搜索结果
+                for (PlaceListButton dimensionPlaceButton : allDimensionPlaceButtons)
+                {
+                    String iconName = dimensionPlaceButton.getIconName();
+                    for (String resultPlaces : searchResult)
                     {
-                        String iconName = dimensionPlaceButton.getIconName();
-                        for (String resultPlaces : searchResult)
-                        {
-                            if (iconName.equals(resultPlaces)) resultButtonList.add(dimensionPlaceButton);
-                        }
+                        if (iconName.equals(resultPlaces)) resultButtonList.add(dimensionPlaceButton);
                     }
                 }
+
 
                 findItemButtons.add(PlaceListButton.builder(Component.empty(), button -> {
                             clearAllWidgets();
                             showContent(resultButtonList, PlaceListButton.class);
-                        }).item(item)
+                        })
+                        .item(item)
                         .size(210,30)
                         .type("search_result")
                         .build());

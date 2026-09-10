@@ -113,7 +113,6 @@ public abstract class PlaceListPressable extends AbstractWidget
             return null;
         }
         return switch (iconName) {
-            case "ender_man_farm" -> ENDER_MAN_FARM;
             case "exchange" -> EXCHANGE;
             case "home" -> HOME;
             case "creative" -> CREATIVE_WORLD;
@@ -122,11 +121,12 @@ public abstract class PlaceListPressable extends AbstractWidget
             case "mob_afk" -> MOB_TOWER_AFK;
             case "end_mainland" -> END_MAINLAND;
             case "end_portal" -> END_PORTAL;
+            case "enderman_farm" -> ENDER_MAN_FARM;
             case "iron_farm" -> IRON_FARM;
             case "sugar_cane" -> SUGAR_CANE;
             case "pigman_farm" -> PIG_MAN;
             case "wither_skull_farm" -> WITHER_SKULL;
-            case "guardian" -> GUARDIAN;
+            case "guardian_farm" -> GUARDIAN;
             case "stone_farm" -> STONE;
             case "furnace" -> FURNACE;
             case "ghast_farm" -> GHAST_FARM;
@@ -228,7 +228,7 @@ public abstract class PlaceListPressable extends AbstractWidget
                             Item item = optHolder.get().value();
                             itemColor = item.getDefaultInstance().getRarity().color().getColor();
                             Component itemName = Component.translatable(item.getDefaultInstance().getItemName().getString());//物品中文名
-                            drawScaledItem(context, item.getDefaultInstance(), this.getX()+10, this.getY()+6, 1f);
+                            drawScaledItem(context, item.getDefaultInstance(), this.getX()+10, this.getY()+7, 1f);
                             context.text(Minecraft.getInstance().font, itemName, (width - getStringWidth(itemName)) / 2 + getX(), getY() + 10, CommonColors.BLACK, false);
 //                            drawScaledItem(context, item.getDefaultInstance(), x + 1, y - 2, 0.6f);
                         }
@@ -268,7 +268,7 @@ public abstract class PlaceListPressable extends AbstractWidget
 
             if (desc.contains("multiDimension"))
             {
-                description += "§6双维度装置§f";
+                description += "§6双维度装置§f\n";
                 dimensionIcon = MULTI_DIMENSION;
             } else {
                 if (desc.contains("overworld"))
@@ -288,7 +288,7 @@ public abstract class PlaceListPressable extends AbstractWidget
                             "挂机完可将此 §6" + desc.split("_")[2] + "§f 帐号退出游戏";
                 }else if(desc.contains("resource"))
                 {
-                    description += "§7 拿取资源处§f\n\n";
+                    description += "§7 拿取资源处§f";
 
                 }
             }
