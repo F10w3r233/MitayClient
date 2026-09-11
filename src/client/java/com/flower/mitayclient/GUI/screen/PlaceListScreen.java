@@ -1,6 +1,5 @@
 package com.flower.mitayclient.GUI.screen;
 
-import com.flower.mitayclient.GUI.HUD.ToolBarHudRenderer;
 import com.flower.mitayclient.GUI.Widget.ComboBoxWidget;
 import com.flower.mitayclient.GUI.Widget.MultiColumnTextFieldWidget;
 import com.flower.mitayclient.GUI.buttons.Accessibility.AccessibilityButton;
@@ -11,7 +10,6 @@ import com.flower.mitayclient.GUI.screen.PlaceListUtil.PlacesPayload;
 import com.flower.mitayclient.GUI.screen.PlaceListUtil.RequestPlacesPayload;
 import com.flower.mitayclient.GUI.screen.ProfileUtil.PlayerProfile;
 import com.flower.mitayclient.GUI.screen.SideBarUtil.SideType;
-import com.flower.mitayclient.util.Data.PlayerDataHandler;
 import com.flower.mitayclient.util.MitayUtils;
 import com.flower.mitayclient.util.ModIdentifier;
 import com.flower.mitayclient.util.Resource;
@@ -19,7 +17,6 @@ import net.fabricmc.fabric.api.client.networking.v1.ClientPlayNetworking;
 import net.minecraft.client.Minecraft;
 import net.minecraft.client.gui.GuiGraphicsExtractor;
 import net.minecraft.client.gui.components.AbstractWidget;
-import net.minecraft.client.gui.screens.social.PlayerEntry;
 import net.minecraft.client.input.KeyEvent;
 import net.minecraft.client.input.MouseButtonEvent;
 import net.minecraft.client.input.PreeditEvent;
@@ -36,9 +33,6 @@ import java.util.stream.Collectors;
 import static com.flower.mitayclient.GUI.buttons.Accessibility.AccessibilityPressableWidget.TICK;
 import static com.flower.mitayclient.util.MitayUtils.*;
 import static com.flower.mitayclient.util.renderer.ScaledElementRenderer.drawScaledText;
-
-
-//做好空值处理
 
 public class PlaceListScreen extends SideBarScreen
 {
@@ -106,7 +100,7 @@ public class PlaceListScreen extends SideBarScreen
             createContentButton(Resource.BACK_text, "", () -> super.switchContent(overworldSide))
     );
     List<PlaceListButton> pig_man_subButtons = Arrays.asList(
-            createContentButton(Resource.RESOURCE_text, "mob_resource", "", outputs.get("pigman_farm"), "tpplace pigman_resource"),
+            createContentButton(Resource.RESOURCE_text, "mob_resource", "", null, "tpplace pigman_resource"),
             createContentButton(Resource.AFK_text, "mob_afk", "tpplace pigman_afk"),
             createContentButton(Resource.BACK_text, "back", () -> super.switchContent(netherSide))
     );
@@ -137,14 +131,14 @@ public class PlaceListScreen extends SideBarScreen
     );
 
     List<PlaceListButton> netherButtons = Arrays.asList(
-            createContentButton(Resource.PIG_MAN_text, "pigman_farm", () -> openSubMenu(pig_man_subButtons)),
+            createContentButton(Resource.PIG_MAN_text, "pigman_farm", "", outputs.get("pigman_farm"), () -> openSubMenu(pig_man_subButtons)),
             createContentButton(Resource.WITHER_SKULL_text, "wither_skull_farm", "", outputs.get("wither_skull_farm"),"tpplace wither_skull_farm"),
             createContentButton(Resource.GHAST_FARM_text, "ghast_farm", "multiDimension", outputs.get("ghast_farm"), () -> openSubMenu(ghast_farm_subButtons))
     );
     List<PlaceListButton> endButtons = Arrays.asList(
             createContentButton(Resource.PORTAL_text, "end_portal", () -> Minecraft.getInstance().setScreen(null)),
             createContentButton(Resource.MAINLAND_text, "end_mainland", "tpplace end_mainland"),
-            createContentButton(Resource.ENDER_MAN_text, "enderman_farm", "", outputs.get("ender_man_farm"),"tpplace enderman_farm")
+            createContentButton(Resource.ENDER_MAN_text, "enderman_farm", "", outputs.get("enderman_farm"),"tpplace enderman_farm")
     );
     List<PlaceListButton> creativeButtons = Arrays.asList(
             createContentButton(Resource.CREATIVE, "creative", "tpplace creativeWorld")
@@ -265,7 +259,7 @@ public class PlaceListScreen extends SideBarScreen
                 String desc = info.desc();
                 String coordinate = format(info.x()) + "_" +format(info.y()) + "_" + format(info.z());
                 sharedPlaceButtons.add(PlaceListButton.builder(Component.empty(), button -> {
-                    sendChatCommand("tpplus " + world + " " + info.x() + " " + info.y() + " " + info.z());
+                    sendChatCommand("tpplus " + world + " " + info.x() + " " + info.y() + " " + info.z() + " " + desc);
                     Minecraft.getInstance().setScreen(null);
                 }).type("shared_place").profile(new PlayerProfile(desc, world + "/" + coordinate + "/" + uploader)).dimensions(0,0,210,30).build());
 
@@ -286,7 +280,7 @@ public class PlaceListScreen extends SideBarScreen
             for (String item : allItems)
             {
                 //待处理经验   #exp_orb
-                if (item.startsWith("#")) continue; //不处理图片，但后续要处理经验，待区分图片与#经验的标识符
+//                if (item.startsWith("#")) continue; //不处理图片，但后续要处理经验，待区分图片与#经验的标识符
                 List<String> searchResult = new ArrayList<>();
                 List<PlaceListButton> resultButtonList = new ArrayList<>();
                 //搜索物品所存在地点

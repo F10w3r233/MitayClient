@@ -28,10 +28,19 @@ import java.util.concurrent.atomic.AtomicReference;
 
 import static com.flower.mitayclient.util.renderer.ScaledElementRenderer.drawScaledItem;
 
+/**
+ *
+ * @Standard ToolTip规范
+ * $iron_ingot 物品
+ * #exp_orb 需自定义材质的物品
+ * %sword 图片
+ *
+ */
+
 @Mixin(ClientTextTooltip.class)
 public class TooltipMixin
 {
-    Identifier EXP_ORB = ModIdentifier.get("textures/gui/widget/tooltip/exp_orb.png");
+   final Identifier EXP_ORB = ModIdentifier.get("textures/gui/widget/tooltip/exp_orb.png");
 
     @Shadow
     private final FormattedCharSequence text;

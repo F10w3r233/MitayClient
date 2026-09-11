@@ -2,6 +2,7 @@ package com.flower.mitayclient.GUI.buttons.PlaceList.Large;
 
 import com.flower.Mitayclient;
 import com.flower.mitayclient.GUI.screen.ProfileUtil.PlayerProfile;
+import com.flower.mitayclient.util.MitayUtils;
 import com.flower.mitayclient.util.ModIdentifier;
 import com.flower.mitayclient.util.renderer.Skin.SkinCacheHelper;
 import net.fabricmc.api.EnvType;
@@ -17,6 +18,7 @@ import net.minecraft.core.Holder;
 import net.minecraft.core.registries.BuiltInRegistries;
 import net.minecraft.network.chat.Component;
 import net.minecraft.resources.Identifier;
+import net.minecraft.util.ARGB;
 import net.minecraft.util.CommonColors;
 import net.minecraft.world.entity.player.PlayerSkin;
 import net.minecraft.world.item.Item;
@@ -24,6 +26,7 @@ import net.minecraft.world.item.Item;
 import java.util.List;
 import java.util.Optional;
 
+import static com.flower.mitayclient.util.MitayUtils.getFontColor;
 import static com.flower.mitayclient.util.MitayUtils.getWorldIcon;
 import static com.flower.mitayclient.util.Resource.*;
 import static com.flower.mitayclient.util.renderer.ScaledElementRenderer.drawScaledItem;
@@ -82,6 +85,9 @@ public abstract class PlaceListPressable extends AbstractWidget
     public static final Identifier MULTI_DIMENSION = ModIdentifier.get("textures/gui/widget/place_list/multi_dimension.png");
     public static final Identifier OVERWORLD_SIDE = ModIdentifier.get("textures/gui/hud/places/grass.png");
     public static final Identifier NETHER_SIDE = ModIdentifier.get("textures/gui/widget/place_list/nether.png");
+
+
+    public static Identifier EXP_ORB = ModIdentifier.get("textures/gui/widget/tooltip/exp_orb.png");
 
     String iconName;
     Identifier iconIdentifier;
@@ -214,14 +220,29 @@ public abstract class PlaceListPressable extends AbstractWidget
             {
                 if (item != null)
                 {
-                    int itemColor = -1;
+                    //自定义图标的物品
+                    if (item.startsWith("#"))
+                    {
+                        Identifier icon = null;
+                        String itemName = "";
+                        //
+                        switch (item)
+                        {
+                            case "#exp_orb" : itemName = "经验";   icon = EXP_ORB;
+                        }
+
+                        context.text(Minecraft.getInstance().font, itemName, (width - getStringWidth(itemName)) / 2 + getX(), getY() + 10, getFontColor(), false);
+                        if (icon != null)
+                            context.blit(RenderPipelines.GUI_TEXTURED, icon, this.getX()+10, this.getY()+7, 0,0,16,16,16,16);
+                    }
+                    int itemColor;
                     String itemRegisterID = "minecraft:" + item;
                     Identifier itemId =
                             Identifier.tryParse(itemRegisterID);
                     String pureItemName = itemRegisterID.replace("minecraft:", "");//poppy
+                    //MC原版物品
                     if(itemId != null)
                     {
-
                         Optional<Holder.Reference<Item>> optHolder = BuiltInRegistries.ITEM.get(itemId);
                         if (optHolder.isPresent())
                         {
@@ -229,7 +250,9 @@ public abstract class PlaceListPressable extends AbstractWidget
                             itemColor = item.getDefaultInstance().getRarity().color().getColor();
                             Component itemName = Component.translatable(item.getDefaultInstance().getItemName().getString());//物品中文名
                             drawScaledItem(context, item.getDefaultInstance(), this.getX()+10, this.getY()+7, 1f);
-                            context.text(Minecraft.getInstance().font, itemName, (width - getStringWidth(itemName)) / 2 + getX(), getY() + 10, CommonColors.BLACK, false);
+                            if (!Mitayclient.getConfig().isDarkShown())
+                                if (itemColor == 16777215) itemColor = BLACK;
+                            context.text(Minecraft.getInstance().font, itemName, (width - getStringWidth(itemName)) / 2 + getX(), getY() + 10, ARGB.color(1f, itemColor), false);
 //                            drawScaledItem(context, item.getDefaultInstance(), x + 1, y - 2, 0.6f);
                         }
 
