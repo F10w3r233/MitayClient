@@ -50,7 +50,7 @@ public class GameMenuScreenMixin extends Screen
         this.addRenderableWidget(
                 MenuButton.builder(Resource.STATISTIC, button ->
                                 this.minecraft.setScreen(new StatsScreen(this, this.minecraft.player.getStats())))
-                        .dimensions(80, this.minecraft.getWindow().getGuiScaledHeight()/2-160,150,20)
+                        .dimensions(80, this.minecraft.getWindow().getGuiScaledHeight()/2-160 + 40,150,20)
                         .build()
         );
 
@@ -60,14 +60,14 @@ public class GameMenuScreenMixin extends Screen
                     this.minecraft.setScreen(null);
                     this.minecraft.mouseHandler.grabMouse();
                 })
-                        .dimensions(80, this.minecraft.getWindow().getGuiScaledHeight()/2-120, 150, 20)
+                        .dimensions(80, this.minecraft.getWindow().getGuiScaledHeight()/2-120 + 40, 150, 20)
                         .build()
         );
 
         this.addRenderableWidget(                                                                                    //自定义按钮
                 MenuButton.builder(Resource.OPTIONS, button ->
                                 this.minecraft.setScreen(new OptionsScreen(this, this.minecraft.options, true)))
-                        .dimensions(80, this.minecraft.getWindow().getGuiScaledHeight()/2-80, 150, 20)
+                        .dimensions(80, this.minecraft.getWindow().getGuiScaledHeight()/2-80 + 40, 150, 20)
                         .build()
         );
 
@@ -80,7 +80,7 @@ public class GameMenuScreenMixin extends Screen
                         this.minecraft.setScreen(new ShareToLanScreen(this));
                     }
                 })
-                        .dimensions(80, openToLanHeight,150,20)
+                        .dimensions(80, openToLanHeight + 40,150,20)
                         .build());
 
         this.addRenderableWidget(                                                                                    //自定义按钮
@@ -99,7 +99,7 @@ public class GameMenuScreenMixin extends Screen
 
                             }
                         })
-                        .dimensions(80, quitHeight, 150, 20)
+                        .dimensions(80, quitHeight + 40, 150, 20)
                         .build());
     }
 
@@ -108,6 +108,6 @@ public class GameMenuScreenMixin extends Screen
     {
         ci.cancel();
         //
-        context.blit(RenderPipelines.GUI_TEXTURED, MITAY_UNIVERSE, this.minecraft.getWindow().getGuiScaledWidth()-420, 20, 0,0,420,202,420,202);
+//        context.blit(RenderPipelines.GUI_TEXTURED, MITAY_UNIVERSE, this.minecraft.getWindow().getGuiScaledWidth()-420, 20, 0,0,420,202,420,202);
     }
 }
