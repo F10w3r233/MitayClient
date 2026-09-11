@@ -251,16 +251,16 @@ public class ChatKeywordDetector
             Map.entry("大本营", "home"),
             Map.entry("刷怪塔·资源点", "mob_resource"),
             Map.entry("刷怪塔·挂机点", "mob_afk"),
-            Map.entry("刷铁机", "iron"),
+            Map.entry("刷铁机", "iron_farm"),
             Map.entry("100倍速熔炉组", "furnace"),
-            Map.entry("刷石机", "stone"),
-            Map.entry("守卫者农场", "guardian"),
-            Map.entry("猪人塔", "pig_man"),
-            Map.entry("凋零骷髅塔", "wither_skull"),
+            Map.entry("刷石机", "stone_farm"),
+            Map.entry("守卫者农场", "guardian_farm"),
+            Map.entry("猪人塔", "pigman_farm"),
+            Map.entry("凋零骷髅塔", "wither_skull_farm"),
             Map.entry("恶魂塔", "ghast_farm"),
             Map.entry("主世界末地传送门", "end_portal"),
             Map.entry("末地主岛", "end_mainland"),
-            Map.entry("小黑塔", "ender_man_farm"),
+            Map.entry("小黑塔", "enderman_farm"),
             Map.entry("创造世界", "creative")
     );
 

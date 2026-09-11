@@ -203,5 +203,7 @@
            - ver 4.6.3.3 - 添加了 ScaledElementRenderer
 2026.09.08 - ver 4.6.3.4 - 修复了 addButton 的错误位置bug
 2026.09.10 - ver 4.6.3.5 - 修复了单人模式Mitay服务器快捷键仍生效的bug
-2026.09.10 - ver 4.6.4 - 初步构建 "按物品查找"；规范PlaceList的icon命名
+           - ver 4.6.4 - 初步构建 "按物品查找"；规范PlaceList的icon命名
 2026.09.11 - ver 4.6.4.1 - 完成了"按物品查找"经验显示; 传送到玩家分享的地点会显示地点的名字
+           - ver 4.6.4.2 - 修复了地点名与其registerName不匹配的崩端bug
+           - ver 4.6.4.3 - 优化了 GameMenu的布局
