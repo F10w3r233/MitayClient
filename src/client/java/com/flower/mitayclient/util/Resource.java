@@ -100,7 +100,9 @@ public class Resource
     public static Component GHAST_FARM_text = Component.translatable("place.mitayclient.ghast_farm");
     public static Component PORTAL_text = Component.translatable("place.mitayclient.portal");
     public static Component MAINLAND_text = Component.translatable("place.mitayclient.mainland");
-    public static Component ENDER_MAN_text = Component.translatable("place.mitayclient.enderman");
+    public static Component ENDER_MAN_text = Component.translatable("place.mitayclient.enderman_farm");
+    public static Component WITHER_ROSE_FARM_text = Component.translatable("place.mitayclient.wither_rose_farm");
+    public static Component CHORUS_FRUIT_FARM_text = Component.translatable("place.mitayclient.chorus_fruit_farm");
 
 
     public static Component ZOO_text = Component.translatable("place.mitayclient.zoo");

@@ -44,6 +44,8 @@ public abstract class PlaceListPressable extends AbstractWidget
 
     //end
     public static final Identifier ENDER_MAN_FARM = ModIdentifier.get("textures/gui/hud/places/ender_pearl.png");
+    public static final Identifier WITHER_ROSE_FARM = ModIdentifier.get("textures/gui/hud/places/wither_rose_farm.png");
+    public static final Identifier CHORUS_FRUIT_FARM = ModIdentifier.get("textures/gui/hud/places/chorus_fruit_farm.png");
 
 
     //overworld
@@ -128,6 +130,8 @@ public abstract class PlaceListPressable extends AbstractWidget
             case "end_mainland" -> END_MAINLAND;
             case "end_portal" -> END_PORTAL;
             case "enderman_farm" -> ENDER_MAN_FARM;
+            case "wither_rose_farm" -> WITHER_ROSE_FARM;
+            case "chorus_fruit_farm" -> CHORUS_FRUIT_FARM;
             case "iron_farm" -> IRON_FARM;
             case "sugar_cane" -> SUGAR_CANE;
             case "pigman_farm" -> PIG_MAN;

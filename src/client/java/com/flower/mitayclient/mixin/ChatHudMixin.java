@@ -150,7 +150,7 @@ public class ChatHudMixin
                 //维度名
                 if(containsDimensionName(content))
                 {
-                    if(!content.contains("末地主岛"))
+                    if(!content.contains("末地主岛") && !content.contains("末地传送门"))
                     {
                         Identifier icon = getDimensionIcon(getContainedDimensionName(content));
                         int startIndex = content.indexOf(getContainedDimensionName(content));
