@@ -33,7 +33,9 @@
 
   "place.mitayclient.portal" : "ロード・ドゥームズデイ・ポータル",
   "place.mitayclient.mainland" : "ランドロード島の終わり",
-  "place.mitayclient.enderman" : "リトル・ハート",
+  "place.mitayclient.enderman_farm" : "リトル・ハート",
+  "place.mitayclient.wither_rose_farm" : "凋零玫瑰农场",
+  "place.mitayclient.chorus_fruit_farm" : "紫颂果农场",
 
   "menu.mitayclient.single" : "シングルプレイヤー",
   "menu.mitayclient.connect" : "サーバーへの直接接続",

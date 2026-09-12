@@ -238,9 +238,11 @@ public class ChatKeywordDetector
             "凋零骷髅塔",
             "恶魂塔",
 
-            "主世界末地传送门",
+            "末地传送门",
             "末地主岛",
             "小黑塔",
+            "凋零玫瑰农场",
+            "紫颂果农场",
 
             "创造世界"
     );
@@ -261,6 +263,8 @@ public class ChatKeywordDetector
             Map.entry("主世界末地传送门", "end_portal"),
             Map.entry("末地主岛", "end_mainland"),
             Map.entry("小黑塔", "enderman_farm"),
+            Map.entry("凋零玫瑰农场", "wither_rose_farm"),
+            Map.entry("紫颂果农场", "chorus_fruit_farm"),
             Map.entry("创造世界", "creative")
     );
 

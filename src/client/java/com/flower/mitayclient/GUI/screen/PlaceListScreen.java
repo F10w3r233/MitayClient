@@ -80,6 +80,8 @@ public class PlaceListScreen extends SideBarScreen
         List<String> stone_farm = List.of("cobblestone");
         List<String> wither_skull_farm = List.of("#exp_orb", "wither_skeleton_skull", "coal");
         List<String> enderman_farm = List.of("#exp_orb", "ender_pearl");
+        List<String> wither_rose_farm = List.of("wither_rose");
+        List<String> chorus_fruit_farm = List.of("chorus_fruit", "chorus_flower");
 
 
 
@@ -91,6 +93,8 @@ public class PlaceListScreen extends SideBarScreen
         outputs.put("stone_farm", stone_farm);
         outputs.put("wither_skull_farm", wither_skull_farm);
         outputs.put("enderman_farm", enderman_farm);
+        outputs.put("wither_rose_farm", wither_rose_farm);
+        outputs.put("chorus_fruit_farm", chorus_fruit_farm);
     }
 
 
@@ -116,6 +120,12 @@ public class PlaceListScreen extends SideBarScreen
             createContentButton(Resource.AFK_text, "mob_afk", "overworld_afk_bot02",null,"tpplace guardian_afk"),
             createContentButton(Resource.BACK_text, "back", () -> super.switchContent(overworldSide))
     );
+
+    List<PlaceListButton> wither_rose_farm_subButtons = Arrays.asList(
+            createContentButton(Resource.RESOURCE_text,  "mob_resource", "tpplace wither_rose_farm_resource"),
+            createContentButton(Resource.AFK_text, "mob_afk", "tpplace wither_rose_farm_afk"),
+            createContentButton(Resource.BACK_text, "back", () -> super.switchContent(endSide))
+    );
     //SubMenuType
 
     List<PlaceListButton> allDimensionPlaceButtons = new ArrayList<>();
@@ -136,9 +146,11 @@ public class PlaceListScreen extends SideBarScreen
             createContentButton(Resource.GHAST_FARM_text, "ghast_farm", "multiDimension", outputs.get("ghast_farm"), () -> openSubMenu(ghast_farm_subButtons))
     );
     List<PlaceListButton> endButtons = Arrays.asList(
-            createContentButton(Resource.PORTAL_text, "end_portal", () -> Minecraft.getInstance().setScreen(null)),
+            createContentButton(Resource.PORTAL_text, "end_portal", "tpplace end_portal"),
             createContentButton(Resource.MAINLAND_text, "end_mainland", "tpplace end_mainland"),
-            createContentButton(Resource.ENDER_MAN_text, "enderman_farm", "", outputs.get("enderman_farm"),"tpplace enderman_farm")
+            createContentButton(Resource.ENDER_MAN_text, "enderman_farm", "", outputs.get("enderman_farm"),"tpplace enderman_farm"),
+            createContentButton(Resource.WITHER_ROSE_FARM_text, "wither_rose_farm", "", outputs.get("wither_rose_farm"),() -> openSubMenu(wither_rose_farm_subButtons)),
+            createContentButton(Resource.CHORUS_FRUIT_FARM_text, "chorus_fruit_farm", "", outputs.get("chorus_fruit_farm"), "tpplace chorus_fruit_farm")
     );
     List<PlaceListButton> creativeButtons = Arrays.asList(
             createContentButton(Resource.CREATIVE, "creative", "tpplace creativeWorld")

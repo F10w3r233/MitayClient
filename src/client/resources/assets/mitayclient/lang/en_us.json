@@ -33,7 +33,9 @@
 
   "place.mitayclient.portal" : "Ender Portal",
   "place.mitayclient.mainland" : "The End · Mainland",
-  "place.mitayclient.enderman" : "Enderman Farm",
+  "place.mitayclient.enderman_farm" : "Enderman Farm",
+  "place.mitayclient.wither_rose_farm" : "Wither Rose Farm",
+  "place.mitayclient.chorus_fruit_farm" : "Chorus Fruit Farm",
 
   "menu.mitayclient.single" : "Singleplayer",
   "menu.mitayclient.connect" : "Connect",

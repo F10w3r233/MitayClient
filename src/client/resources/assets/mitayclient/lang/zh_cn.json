@@ -31,9 +31,11 @@
   "place.mitayclient.wither_skull" : "凋零骷髅农场",
   "place.mitayclient.ghast_farm" : "恶魂塔",
 
-  "place.mitayclient.portal" : "主世界末地传送门",
+  "place.mitayclient.portal" : "末地传送门",
   "place.mitayclient.mainland" : "末地主岛",
-  "place.mitayclient.enderman" : "小黑塔",
+  "place.mitayclient.enderman_farm" : "小黑塔",
+  "place.mitayclient.wither_rose_farm" : "凋零玫瑰农场",
+  "place.mitayclient.chorus_fruit_farm" : "紫颂果农场",
 
   "menu.mitayclient.single" : "单人游戏",
   "menu.mitayclient.connect" : "直连服务器",
